@@ -230,6 +230,7 @@ async function convertAnimation(runtime: Runtime, work: Work, format: 'gif' | 'm
   const { width, height } = first;
   first.close();
   if (format === 'gif') {
+    if (typeof OffscreenCanvas === 'undefined') throw new Error('GIF 转换需要支持 OffscreenCanvas 的浏览器');
     const { GIFEncoder, quantize, applyPalette } = await import('gifenc');
     const canvas = new OffscreenCanvas(width, height);
     const context = canvas.getContext('2d', { willReadFrequently: true });
@@ -346,7 +347,7 @@ async function novelEpub(runtime: Runtime, work: Work, signal?: AbortSignal) {
   const manifest = chapters.map((_, i) => `<item id="c${i + 1}" href="chapter-${i + 1}.xhtml" media-type="application/xhtml+xml"/>`).join('') + [...illustrations.entries()].map(([id, item], i) => `<item id="img${i}" href="${xml(item.path)}" media-type="${item.type}"${id === '__cover' ? ' properties="cover-image"' : ''}/>`).join('');
   const modified = new Date(work.updated || Date.now());
   const date = Number.isNaN(modified.getTime()) ? new Date() : modified;
-  files.push({ name: 'OEBPS/content.opf', data: strToU8(`<?xml version="1.0" encoding="UTF-8"?><package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="id"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="id">pixiv-novel-${xml(work.id)}</dc:identifier><dc:title>${xml(work.title)}</dc:title><dc:creator>${xml(work.userName)}</dc:creator><dc:language>ja</dc:language><dc:source>${xml(sourceUrl(work))}</dc:source><meta property="dcterms:modified">${date.toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta></metadata><manifest><item id="title" href="title.xhtml" media-type="application/xhtml+xml"/><item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>${manifest}</manifest><spine><itemref idref="title"/>${chapters.map((_, i) => `<itemref idref="c${i + 1}"/>`).join('')}</spine></package>`) });
+  files.push({ name: 'OEBPS/content.opf', data: strToU8(`<?xml version="1.0" encoding="UTF-8"?><package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="id"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="id">pixiv-novel-${xml(work.id)}</dc:identifier><dc:title>${xml(work.title)}</dc:title><dc:creator>${xml(work.userName)}</dc:creator><dc:language>und</dc:language><dc:source>${xml(sourceUrl(work))}</dc:source><meta property="dcterms:modified">${date.toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta></metadata><manifest><item id="title" href="title.xhtml" media-type="application/xhtml+xml"/><item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>${manifest}</manifest><spine><itemref idref="title"/>${chapters.map((_, i) => `<itemref idref="c${i + 1}"/>`).join('')}</spine></package>`) });
   return archive((async function* () { yield* files; })(), 'application/epub+zip', signal);
 }
 

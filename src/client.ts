@@ -49,12 +49,15 @@ export function createClient(runtime: Runtime): PixivClient {
   let token = '';
   let checkedAt = 0;
   let generation = 0;
+  let identityRequest = 0;
+  let refreshing: Promise<string> | undefined;
   const cache = new Map<string, { value: Work; at: number }>();
   const discoveries = new Map<string, Set<string>>();
   const seriesCursors = new Map<string, Map<number, number>>();
 
   function invalidate() {
     generation++;
+    identityRequest++;
     cache.clear(); discoveries.clear(); seriesCursors.clear();
     checkedAt = 0; token = '';
   }
@@ -93,29 +96,45 @@ export function createClient(runtime: Runtime): PixivClient {
     return object(await json(path, { signal })).body;
   }
 
-  async function account(): Promise<string> {
-    const html = await request(`/?toolbox_time=${Date.now()}`);
-    const head = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? html;
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    let state: Data = {};
-    const next = doc.querySelector('#__NEXT_DATA__')?.textContent;
-    if (next) {
-      const page = optional(optional(optional(JSON.parse(next)).props).pageProps);
-      const serialized = page.serverSerializedPreloadedState;
-      state = typeof serialized === 'string' ? object(JSON.parse(serialized)) : optional(serialized);
+  async function readAccount(): Promise<string> {
+    const requestId = ++identityRequest;
+    try {
+      const html = await request(`/?toolbox_time=${Date.now()}`);
+      const head = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? html;
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      let state: Data = {};
+      const next = doc.querySelector('#__NEXT_DATA__')?.textContent;
+      if (next) {
+        const page = optional(optional(optional(JSON.parse(next)).props).pageProps);
+        const serialized = page.serverSerializedPreloadedState;
+        state = typeof serialized === 'string' ? object(JSON.parse(serialized)) : optional(serialized);
+      }
+      const legacy = doc.querySelector('meta[name="global-data"], meta[id="meta-global-data"]')?.getAttribute('content');
+      const global = legacy ? object(JSON.parse(legacy)) : {};
+      const self = optional(optional(state.userData).self);
+      const uid = self.id ?? self.userId ?? optional(global.userData).id
+        ?? head.match(/user_id\s*:\s*['"](\d+)['"]/)?.[1]
+        ?? head.match(/['"]user_id['"]\s*,\s*['"]?(\d+)/)?.[1];
+      const current = uid ? id(uid) : 'guest';
+      const freshToken = string(optional(state.api).token ?? global.token)
+        || head.match(/pixiv\.context\.token\s*=\s*['"](\w+)['"]/)?.[1] || '';
+      if (requestId !== identityRequest) throw new Error('Pixiv 登录状态已更新，请重试');
+      if (identity !== current) invalidate();
+      identity = current; token = freshToken; checkedAt = Date.now();
+      return identity;
+    } catch (error) {
+      if (requestId === identityRequest) invalidate();
+      throw error;
     }
-    const legacy = doc.querySelector('meta[name="global-data"], meta[id="meta-global-data"]')?.getAttribute('content');
-    const global = legacy ? object(JSON.parse(legacy)) : {};
-    const self = optional(optional(state.userData).self);
-    const uid = self.id ?? self.userId ?? optional(global.userData).id
-      ?? head.match(/user_id\s*:\s*['"](\d+)['"]/)?.[1]
-      ?? head.match(/['"]user_id['"]\s*,\s*['"]?(\d+)/)?.[1];
-    const current = uid ? id(uid) : 'guest';
-    const freshToken = string(optional(state.api).token ?? global.token)
-      || head.match(/pixiv\.context\.token\s*=\s*['"](\w+)['"]/)?.[1] || '';
-    if (identity !== current) invalidate();
-    identity = current; token = freshToken; checkedAt = Date.now();
-    return identity;
+  }
+
+  function account(): Promise<string> {
+    if (!refreshing) {
+      // Identity reads have no caller-owned AbortSignal, so hover cancellation cannot
+      // cancel another caller's authentication check.
+      refreshing = readAccount().finally(() => { refreshing = undefined; });
+    }
+    return refreshing;
   }
 
   async function session() {
@@ -123,7 +142,7 @@ export function createClient(runtime: Runtime): PixivClient {
   }
 
   function unchanged(version: number) {
-    if (version !== generation) throw new Error('Pixiv 账号已切换，请重新执行此操作');
+    if (version !== generation) throw new Error('Pixiv 会话状态已改变，请重新执行此操作');
   }
 
   async function work(ref: Ref, signal?: AbortSignal): Promise<Work> {
@@ -205,11 +224,13 @@ export function createClient(runtime: Runtime): PixivClient {
   async function post(path: string, payload: Data | URLSearchParams, auth: { version: number; csrf: string }) {
     unchanged(auth.version);
     const form = payload instanceof URLSearchParams;
-    await json(path, { method: 'POST', headers: {
+    const result = await json(path, { method: 'POST', headers: {
       Accept: 'application/json', 'Content-Type': form ? 'application/x-www-form-urlencoded; charset=utf-8' : 'application/json; charset=utf-8',
       'x-csrf-token': auth.csrf,
     }, body: form ? payload.toString() : JSON.stringify(payload) });
+    if (!(Array.isArray(result) && result.length === 0) && optional(result).error !== false) throw new Error('Pixiv 未确认操作成功，请刷新页面核实');
     unchanged(auth.version);
+    generation++;
     cache.clear();
   }
 
@@ -272,9 +293,10 @@ export function createClient(runtime: Runtime): PixivClient {
         return { refs: items, next: offset + array(data.works).length < Number(data.total) };
       }
       const data = await get(`/ajax/user/${user[1]}/profile/all`);
-      const categories = kind === 'novel' ? ['novels'] : rest.startsWith('manga') ? ['manga'] : rest.startsWith('illustrations') ? ['illusts'] : ['illusts', 'manga'];
-      const ids = [...new Set(categories.flatMap(category => Object.keys(optional(data[category]))))].sort((a, b) => Number(b) - Number(a));
-      return { refs: ids.slice(offset, offset + 100).map(value => ({ id: id(value), kind })), next: offset + 100 < ids.length };
+      const categories = kind === 'novel' ? ['novels'] : rest.startsWith('manga') ? ['manga'] : rest.startsWith('illustrations') ? ['illusts'] : rest ? ['illusts', 'manga'] : ['illusts', 'manga', 'novels'];
+      const all = categories.flatMap(category => Object.keys(optional(data[category])).map(value => ({ id: id(value), kind: category === 'novels' ? 'novel' as const : 'illust' as const })));
+      const unique = [...new Map(all.map(ref => [refKey(ref), ref])).values()].sort((a, b) => Number(b.id) - Number(a.id));
+      return { refs: unique.slice(offset, offset + 100), next: offset + 100 < unique.length };
     }
     const search = path.match(/^\/tags\/([^/]+)(?:\/(artworks|illustrations|manga|novels))?\/?$/);
     if (search || path === '/search') {

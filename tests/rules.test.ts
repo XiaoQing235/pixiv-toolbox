@@ -21,7 +21,7 @@ describe('filters', () => {
 describe('filenames', () => {
   it('allows template directories but sanitizes work data and retains page and extension', () => {
     expect(filename(work, defaults, 3, '.png')).toBe('Pixiv/Artist/A_B_作品_42_p3.png');
-    expect(filename({ ...work, userName: '../CON', title: 'NUL' }, { ...defaults, filename: '{artist}/{title}_{page}' }, 2, 'jpg')).toBe('Pixiv/.._CON/NUL_2.jpg');
+    expect(filename({ ...work, userName: '../CON', title: 'NUL' }, { ...defaults, filename: '{artist}/{title}_{page}' }, 2, 'jpg')).toBe('Pixiv/.._CON/_NUL_2.jpg');
     expect(filename(work, { ...defaults, folder: '', filename: 'CON' }, undefined, 'zip')).toBe('_CON.zip');
   });
   it('rejects path traversal and absolute settings', () => {

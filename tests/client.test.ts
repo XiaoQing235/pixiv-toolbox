@@ -60,6 +60,22 @@ describe('work data', () => {
     expect((await run(client.work({ id: '42', kind: 'illust' }))).id).toBe('42');
     expect(request.mock.calls.filter(([url]) => new URL(url).pathname === '/ajax/illust/42')).toHaveLength(2);
   });
+  it('allows simultaneous work reads while cancellation remains caller-specific', async () => {
+    const controller = new AbortController();
+    let first = true;
+    const { client, request } = mock(url => {
+      if (url.pathname === '/') return identity();
+      if (url.pathname.startsWith('/ajax/user')) return wrapped(profile);
+      if (first) { first = false; controller.abort(); }
+      return wrapped(artwork);
+    });
+    const results = await run(Promise.allSettled([
+      client.work({ id: '42', kind: 'illust' }, controller.signal),
+      client.work({ id: '42', kind: 'illust' }),
+    ]));
+    expect(results.map(result => result.status)).toEqual(['rejected', 'fulfilled']);
+    expect(request.mock.calls.filter(([url]) => new URL(url).pathname === '/')).toHaveLength(1);
+  });
   it('preserves ugoira frame delays and maps both kinds of novel illustrations', async () => {
     const { client } = mock(url => {
       if (url.pathname === '/') return identity();
@@ -82,7 +98,7 @@ describe('writes and errors', () => {
     await run(client.follow('7', true));
     await run(client.follow('7', false));
     const writes = request.mock.calls.filter(([, options]) => options?.method === 'POST');
-    expect(JSON.parse(writes[0][1]!.body!)).toEqual({ illust_id: '42', comment: '', restrict: 1, tags: ['自定义'] });
+    expect(JSON.parse(String(writes[0][1]!.body!))).toEqual({ illust_id: '42', comment: '', restrict: 1, tags: ['自定义'] });
     expect(writes[1][1]!.body).toBe('del=1&book_id=987');
     expect(new URL(writes[2][0]).pathname).toBe('/bookmark_add.php');
     expect(new URL(writes[3][0]).pathname).toBe('/rpc_group_setting.php');
@@ -97,9 +113,22 @@ describe('writes and errors', () => {
     const { client } = mock(url => url.pathname === '/' ? identity() : response('<html>Verification required</html>'));
     await expect(run(client.follow('7', true))).rejects.toThrow('无法解析');
   });
+  it('rejects unconfirmed JSON writes instead of claiming success', async () => {
+    const { client } = mock(url => url.pathname === '/' ? identity() : response({ message: 'verification required' }));
+    await expect(run(client.follow('7', true))).rejects.toThrow('未确认操作成功');
+  });
 });
 
 describe('pagination', () => {
+  it('keeps work kinds distinct on a user overview and selects the requested category', async () => {
+    const { client } = mock(url => url.pathname === '/' ? identity() : wrapped({ illusts: { '42': null }, manga: { '41': null }, novels: { '42': null } }));
+    expect((await run(client.list('/users/7', 1))).refs).toEqual([{ id: '42', kind: 'illust' }, { id: '42', kind: 'novel' }, { id: '41', kind: 'illust' }]);
+    expect((await run(client.list('/users/7/manga', 1))).refs).toEqual([{ id: '41', kind: 'illust' }]);
+  });
+  it('reads novel ranking object entries and respects the upstream next marker', async () => {
+    const { client } = mock(url => url.pathname === '/' ? identity() : wrapped({ display_a: { rank_a: { '0': { id: '42' } }, next: null } }));
+    expect(await run(client.list('/novel/ranking.php?mode=rookie', 1))).toEqual({ refs: [{ id: '42', kind: 'novel' }], next: false });
+  });
   it('retains bookmark privacy and uses the correct novel search page size', async () => {
     const { client, request } = mock(url => {
       if (url.pathname === '/') return identity();
