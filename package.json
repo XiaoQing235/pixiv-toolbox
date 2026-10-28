@@ -1,0 +1,12 @@
+{
+  "name": "pixiv-toolbox",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "build": "node scripts/build.mjs",
+    "test:browser": "playwright test"
+  }
+}
