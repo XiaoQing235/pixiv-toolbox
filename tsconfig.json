@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", "module": "ESNext", "moduleResolution": "Bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"], "strict": true,
+    "skipLibCheck": true, "noEmit": true, "esModuleInterop": true, "allowJs": true,
+    "types": ["vite/client", "chrome", "tampermonkey", "node"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "tests/**/*.ts", "vite*.ts", "playwright.config.ts"]
+}
