@@ -4,7 +4,6 @@ import { spawnSync } from 'node:child_process';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { zipSync } from 'fflate';
-import { cloudOrigins } from './cloud-origins.mjs';
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 process.chdir(projectRoot);
@@ -30,7 +29,9 @@ await writeFile('dist/extension/manifest.json', JSON.stringify({
   description: '预览、阅读、整理和下载 Pixiv 作品', minimum_chrome_version: '120',
   permissions: ['storage', 'downloads', 'alarms', 'offscreen', 'declarativeNetRequestWithHostAccess'],
   host_permissions: ['https://www.pixiv.net/*', 'https://*.pximg.net/*'],
-  optional_host_permissions: cloudOrigins.map(origin => `${origin}/*`),
+  // User-configured WebDAV hosts are requested individually in setCloud().
+  // Declaring optional origins does not grant them at installation.
+  optional_host_permissions: ['https://*/*'],
   background: { service_worker: 'background.js', type: 'module' },
   content_scripts: [
     { matches: ['https://www.pixiv.net/*'], js: ['presence.js'], run_at: 'document_start' },

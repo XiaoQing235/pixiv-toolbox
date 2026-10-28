@@ -91,6 +91,33 @@ describe('work data', () => {
 });
 
 describe('writes and errors', () => {
+  it('preserves an existing private bookmark when explicitly replacing its tags', async () => {
+    const { client, request } = mock((url, options) => url.pathname === '/' ? identity() : options?.method === 'POST' ? response([]) : wrapped({ ...artwork, bookmarkData: { id: '987', private: true } }));
+    await run(client.bookmark({ id: '42', kind: 'illust' }, true, ['替换标签']));
+    const write = request.mock.calls.find(([, options]) => options?.method === 'POST')![1]!;
+    expect(JSON.parse(String(write.body))).toMatchObject({ tags: ['替换标签'], restrict: 1 });
+  });
+  it('does not rewrite an existing bookmark when tags are omitted', async () => {
+    const { client, request } = mock(url => url.pathname === '/' ? identity() : wrapped({ ...artwork, bookmarkData: { id: '987', private: true } }));
+    await run(client.bookmark({ id: '42', kind: 'novel' }, true));
+    expect(request.mock.calls.some(([, options]) => options?.method === 'POST')).toBe(false);
+  });
+  it('refuses to replace tags when the existing privacy value is unknown', async () => {
+    const { client, request } = mock(url => url.pathname === '/' ? identity() : wrapped({ ...artwork, bookmarkData: { id: '987' } }));
+    await expect(run(client.bookmark({ id: '42', kind: 'illust' }, true, []))).rejects.toThrow('隐私状态');
+    expect(request.mock.calls.some(([, options]) => options?.method === 'POST')).toBe(false);
+  });
+  it('rejects privacy-only edits that would discard unread bookmark tags', async () => {
+    const { client, request } = mock(url => url.pathname === '/' ? identity() : wrapped({ ...artwork, bookmarkData: { id: '987', private: true } }));
+    await expect(run(client.bookmark({ id: '42', kind: 'illust' }, true, undefined, false))).rejects.toThrow('不能单独修改隐私');
+    expect(request.mock.calls.some(([, options]) => options?.method === 'POST')).toBe(false);
+  });
+  it('still permits a new public bookmark with no tags', async () => {
+    const { client, request } = mock((url, options) => url.pathname === '/' ? identity() : options?.method === 'POST' ? response([]) : wrapped(artwork));
+    await run(client.bookmark({ id: '42', kind: 'novel' }, true));
+    const write = request.mock.calls.find(([, options]) => options?.method === 'POST')![1]!;
+    expect(JSON.parse(String(write.body))).toMatchObject({ novel_id: '42', tags: [], restrict: 0 });
+  });
   it('uses bookmark record IDs for deletion and confirmed form fields for following', async () => {
     const { client, request } = mock((url, options) => url.pathname === '/' ? identity() : options?.method === 'POST' ? response([]) : wrapped({ ...artwork, bookmarkData: { id: '987', private: false } }));
     await run(client.bookmark({ id: '42', kind: 'illust' }, true, ['自定义'], true));

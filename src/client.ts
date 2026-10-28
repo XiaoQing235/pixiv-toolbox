@@ -234,14 +234,27 @@ export function createClient(runtime: Runtime): PixivClient {
     cache.clear();
   }
 
-  async function bookmark(ref: Ref, enabled: boolean, tags: string[] = [], privateBookmark = false) {
+  async function bookmark(ref: Ref, enabled: boolean, tags?: string[], privateBookmark?: boolean) {
     id(ref.id);
     const auth = await writeAuth();
     const type = ref.kind === 'novel' ? 'novels' : 'illusts';
     if (enabled) {
+      const data = object(await body(`/ajax/${ref.kind}/${ref.id}?time=${Date.now()}`));
+      unchanged(auth.version);
+      if (id(data.id) !== ref.id || !Object.hasOwn(data, 'bookmarkData')) throw new Error('无法确认作品当前收藏状态，请刷新页面后重试');
+      const existing = data.bookmarkData === null ? undefined : object(data.bookmarkData);
+      if (existing && tags === undefined) {
+        if (privateBookmark !== undefined) throw new Error('未取得现有收藏标签，不能单独修改隐私；请明确提供替换标签');
+        return;
+      }
+      let privacy = privateBookmark;
+      if (existing && privacy === undefined) {
+        if (typeof existing.private !== 'boolean') throw new Error('无法确认现有收藏的隐私状态，未修改收藏');
+        privacy = existing.private;
+      }
       await post(`/ajax/${type}/bookmarks/add`, {
         [ref.kind === 'novel' ? 'novel_id' : 'illust_id']: ref.id,
-        comment: '', restrict: privateBookmark ? 1 : 0, tags,
+        comment: '', restrict: privacy ? 1 : 0, tags: tags ?? [],
       }, auth);
     } else {
       const data = object(await body(`/ajax/${ref.kind}/${ref.id}?time=${Date.now()}`));

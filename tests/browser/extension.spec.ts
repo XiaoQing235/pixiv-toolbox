@@ -1,10 +1,10 @@
 import { chromium, expect, test } from '@playwright/test';
 import { resolve } from 'node:path';
 
-test('packaged MV3 loads its worker and options in an isolated Edge profile', async ({}, info) => {
+test('packaged MV3 loads its worker and options in an isolated Chromium profile', async ({}, info) => {
   const extension = resolve('dist/extension');
   const context = await chromium.launchPersistentContext(info.outputPath('profile'), {
-    channel: 'msedge', headless: true,
+    channel: 'chromium', headless: true,
     args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
   });
   try {
@@ -29,5 +29,6 @@ test('packaged MV3 loads its worker and options in an isolated Edge profile', as
     await page.reload();
     await expect(page.getByRole('slider').first()).toHaveValue('70');
     expect(errors).toEqual([]);
+    await page.screenshot({ path: info.outputPath('options.png'), fullPage: true });
   } finally { await context.close(); }
 });
