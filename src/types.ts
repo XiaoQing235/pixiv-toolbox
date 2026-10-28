@@ -5,10 +5,10 @@ export interface Work extends Ref {
   title: string; userId: string; userName: string; thumb: string; pages: Page[];
   tags: string[]; bookmarkCount: number | null; bookmarked: boolean; following: boolean;
   restricted: number; ai: boolean; updated: string; description?: string; text?: string;
-  avatar?: string; cover?: string; seriesId?: string;
+  avatar?: string; cover?: string; seriesId?: string; novelImages?: Record<string, string>;
   animation?: { src: string; frames: { file: string; delay: number }[] };
 }
-export interface HttpOptions { method?: string; headers?: Record<string, string>; body?: string; bytes?: boolean; signal?: AbortSignal }
+export interface HttpOptions { method?: string; headers?: Record<string, string>; body?: string | Uint8Array; bytes?: boolean; signal?: AbortSignal }
 export interface HttpResult { status: number; headers: Record<string, string>; body: string | Uint8Array }
 export interface Store {
   get<T>(id: string): Promise<T | undefined>;
@@ -19,7 +19,7 @@ export interface Store {
 export interface Runtime {
   mode: 'extension' | 'userscript'; store: Store;
   request(url: string, options?: HttpOptions): Promise<HttpResult>;
-  save(data: Blob | string, filename: string, conflict?: 'uniquify' | 'overwrite' | 'prompt'): Promise<void>;
+  save(data: Blob | string, filename: string, conflict?: 'uniquify' | 'overwrite' | 'prompt', receipt?: string, signal?: AbortSignal): Promise<void>;
   notify(): void;
   subscribe(callback: () => void): () => void;
 }
@@ -30,7 +30,7 @@ export interface Filter {
 export interface Settings {
   hover: boolean; hoverRatio: number; theme: 'auto' | 'light' | 'dark'; preload: number; hideAds: boolean;
   filename: string; folder: string; metadata: boolean; animationFormat: 'zip' | 'gif' | 'mp4' | 'webm';
-  novelFormat: 'txt' | 'epub'; mangaZip: boolean; concurrency: number; filter: Filter;
+  novelFormat: 'txt' | 'epub'; mangaZip: boolean; concurrency: number; filter: Filter; directory?: boolean;
 }
 export interface Reading { account: string; ref: Ref; title: string; thumb: string; page: number; position: number; at: number }
 export type TaskState = 'queued' | 'running' | 'saving' | 'done' | 'failed' | 'paused' | 'uncertain';
@@ -71,5 +71,5 @@ export interface Services {
   removeSchedule(id: string): Promise<void>;
   cloud(): Promise<CloudConfig | undefined>;
   setCloud(config: CloudConfig): Promise<void>;
-  sync(): Promise<void>;
+  sync(choice?: 'local' | 'remote'): Promise<void>;
 }
