@@ -1,0 +1,1206 @@
+{
+  "schema": 1,
+  "time_zone": "UTC",
+  "mutations": [
+    {
+      "time": "2026-10-28T05:05:53.646Z",
+      "source": "R01",
+      "line": 506,
+      "kind": "patch",
+      "files": [
+        ".gitignore",
+        "package.json",
+        "src/types.ts"
+      ],
+      "source_sha256": "88158adbfa600332260531a578c959dd775f70e21c5720c55a7c05b53c06557f"
+    },
+    {
+      "time": "2026-10-28T05:09:30.925Z",
+      "source": "R08",
+      "line": 43,
+      "kind": "patch",
+      "files": [
+        "src/site.ts",
+        "src/ui/mount.ts"
+      ],
+      "source_sha256": "01de60e31601e185ef5f3ddba7bd6009bd43765ee69533759805ab55f09dc4e9"
+    },
+    {
+      "time": "2026-10-28T05:12:24.043Z",
+      "source": "R01",
+      "line": 581,
+      "kind": "patch",
+      "files": [
+        "src/types.ts",
+        "tsconfig.json",
+        "src/store.ts",
+        "src/runtime.ts"
+      ],
+      "source_sha256": "42ff390f1b08d0ca787aa57476624716c60c82a1078f940e6f1dde8dda2cf405"
+    },
+    {
+      "time": "2026-10-28T05:12:36.830Z",
+      "source": "R07",
+      "line": 119,
+      "kind": "patch",
+      "files": [
+        "src/client.ts"
+      ],
+      "source_sha256": "fe5a70f41af73c29933de7c5fc56897ec460ac30bc1e9792acd1477657d769c9"
+    },
+    {
+      "time": "2026-10-28T05:13:05.063Z",
+      "source": "R09",
+      "line": 79,
+      "kind": "patch",
+      "files": [
+        "src/media.ts",
+        "src/vendor.d.ts"
+      ],
+      "source_sha256": "caddfca3ace6ec6b5696ef840628be763abc70cb82c577af9f5a525adafd6627"
+    },
+    {
+      "time": "2026-10-28T05:13:55.332Z",
+      "source": "R08",
+      "line": 59,
+      "kind": "patch",
+      "files": [
+        "src/ui/App.vue"
+      ],
+      "source_sha256": "882af3784dc8f5d9d85dc1d2246be0b7e4c9a462744cb70291c9619b12b57f03"
+    },
+    {
+      "time": "2026-10-28T05:14:14.384Z",
+      "source": "R07",
+      "line": 149,
+      "kind": "patch",
+      "files": [
+        "src/client.ts",
+        "src/rules.ts"
+      ],
+      "source_sha256": "f2630cdd55051e5548d6220d9bfa99686a5aadca20785b448201c6cc857394fa"
+    },
+    {
+      "time": "2026-10-28T05:14:47.039Z",
+      "source": "R07",
+      "line": 159,
+      "kind": "observed package",
+      "files": [
+        "package.json"
+      ],
+      "source_sha256": "d338895770b0fdb1300f952605c1810e74831ebdfbe60ca0fa2c4496672dbf60"
+    },
+    {
+      "time": "2026-10-28T05:14:58.302Z",
+      "source": "R09",
+      "line": 105,
+      "kind": "patch",
+      "files": [
+        "src/media.ts"
+      ],
+      "source_sha256": "fb24bee1a404f8ddc02935ad401a31b69f4613c0c73416295bf3a39280da0a70"
+    },
+    {
+      "time": "2026-10-28T05:15:46.191Z",
+      "source": "R08",
+      "line": 77,
+      "kind": "patch",
+      "files": [
+        "src/site.ts",
+        "src/ui/App.vue",
+        "src/ui/style.css"
+      ],
+      "source_sha256": "6835d15834ed8aaaa09dabc7ee5b1749067738cce706c62cf89c9941cd2c07ec"
+    },
+    {
+      "time": "2026-10-28T05:15:48.969Z",
+      "source": "R07",
+      "line": 171,
+      "kind": "patch",
+      "files": [
+        "src/client.ts",
+        "src/rules.ts"
+      ],
+      "source_sha256": "7202833644ce7f85ca9f78ac1145c6d7ae826946206d7a412107cbbb5c5c1f09"
+    },
+    {
+      "time": "2026-10-28T05:16:19.596Z",
+      "source": "R09",
+      "line": 114,
+      "kind": "patch",
+      "files": [
+        "tests/media.test.ts"
+      ],
+      "source_sha256": "c5f4583a82cadb0c82fb56e57441ab2ae3729d19292473fc41d70d699f4948f9"
+    },
+    {
+      "time": "2026-10-28T05:16:25.622Z",
+      "source": "R01",
+      "line": 598,
+      "kind": "patch",
+      "files": [
+        "src/types.ts",
+        "src/services.ts",
+        "src/sync.ts"
+      ],
+      "source_sha256": "e6aab08eb270c6d32b441e7b986bedaa4838d35c301cb366f834f04e8951bf55"
+    },
+    {
+      "time": "2026-10-28T05:16:54.618Z",
+      "source": "R08",
+      "line": 96,
+      "kind": "patch",
+      "files": [
+        "tests/site.test.ts"
+      ],
+      "source_sha256": "1f1e06c250481f21d29904cd9096cf1ff3cd1b4064bf877cbb2f00e8bd3ebfd4"
+    },
+    {
+      "time": "2026-10-28T05:17:11.875Z",
+      "source": "R07",
+      "line": 179,
+      "kind": "patch",
+      "files": [
+        "src/client.ts",
+        "tests/rules.test.ts",
+        "tests/client.test.ts"
+      ],
+      "source_sha256": "a2074710ba8335c91960b91c92f4c2f41bbfceb4f509f924041f7817679e54a0"
+    },
+    {
+      "time": "2026-10-28T05:18:17.168Z",
+      "source": "R08",
+      "line": 126,
+      "kind": "patch",
+      "files": [
+        "src/ui/App.vue"
+      ],
+      "source_sha256": "dbe403afb36ecf1f36ca5b10f224562552a1d7f02c56e66599ccbb2b4cd32429"
+    },
+    {
+      "time": "2026-10-28T05:18:42.109Z",
+      "source": "R01",
+      "line": 617,
+      "kind": "package manager result",
+      "files": [
+        "package.json"
+      ],
+      "source_sha256": "76a9fe4e7e464051fa2b3877ff4dad0061fda98ab2af99f48b29d2b10b5d46a1"
+    },
+    {
+      "time": "2026-10-28T05:18:42.109Z",
+      "source": "R01",
+      "line": 617,
+      "kind": "patch",
+      "files": [
+        "tsconfig.json",
+        "src/background.ts",
+        "src/offscreen.ts",
+        "src/content.ts",
+        "src/userscript.ts",
+        "src/options.ts",
+        "options.html",
+        "offscreen.html"
+      ],
+      "source_sha256": "41b3ac2bfcce8c01523e49a48b6487a5cdbef103375b7a00d03ed110cdb695cf"
+    },
+    {
+      "time": "2026-10-28T05:18:52.475Z",
+      "source": "R09",
+      "line": 171,
+      "kind": "patch",
+      "files": [
+        "src/media.ts"
+      ],
+      "source_sha256": "bd8b192969448b9a2d805e88245beb045e3939bf72e8edf7783dc49b6124ad52"
+    },
+    {
+      "time": "2026-10-28T05:19:40.324Z",
+      "source": "R07",
+      "line": 215,
+      "kind": "patch",
+      "files": [
+        "src/client.ts",
+        "tests/rules.test.ts",
+        "tests/client.test.ts"
+      ],
+      "source_sha256": "ad0cd7f7a06f18eae95c68b0394260fe8be828b7ccdcc1ead993d816be3c2b6f"
+    },
+    {
+      "time": "2026-10-28T05:20:43.041Z",
+      "source": "R07",
+      "line": 227,
+      "kind": "patch",
+      "files": [
+        "src/client.ts",
+        "tests/client.test.ts"
+      ],
+      "source_sha256": "bb1fb73a335b52094f3c477492f9b297133969170650ead8fc244c15affd7a92"
+    },
+    {
+      "time": "2026-10-28T05:20:55.498Z",
+      "source": "R08",
+      "line": 177,
+      "kind": "patch",
+      "files": [
+        "src/ui/App.vue"
+      ],
+      "source_sha256": "a49d6aa505e1d37644df1b35d6aca20ea2f7c588f7dcd75efc90a78eb3e9fefc"
+    },
+    {
+      "time": "2026-10-28T05:20:55.498Z",
+      "source": "R08",
+      "line": 177,
+      "kind": "shell replace",
+      "files": [
+        "src/ui/App.vue"
+      ],
+      "source_sha256": "be5e4fd6e2b67c00b1e1c8f882a5c1c0f7f7369e2fa3bb74aad05a1523cddcde"
+    },
+    {
+      "time": "2026-10-28T05:21:34.161Z",
+      "source": "R07",
+      "line": 244,
+      "kind": "patch",
+      "files": [
+        "src/client.ts"
+      ],
+      "source_sha256": "e79cd033fae4f9789c1fdfc1a5e4aa60b60ec2743c7e72e34a7ca4046c845bbb"
+    },
+    {
+      "time": "2026-10-28T05:22:21.281Z",
+      "source": "R08",
+      "line": 199,
+      "kind": "patch",
+      "files": [
+        "src/ui/App.vue"
+      ],
+      "source_sha256": "09304f41ac54545e8aed96ab54fb06a9668820a0ec6119274ef185fdf1f2fb71"
+    },
+    {
+      "time": "2026-10-28T05:22:21.281Z",
+      "source": "R08",
+      "line": 199,
+      "kind": "shell replace",
+      "files": [
+        "src/ui/App.vue"
+      ],
+      "source_sha256": "6137b502c1f9a0002e76dbebf493095999a90de2d43c2f64d00e9a48394403e3"
+    },
+    {
+      "time": "2026-10-28T05:23:28.704Z",
+      "source": "R09",
+      "line": 217,
+      "kind": "patch",
+      "files": [
+        "tests/browser/fixture.html",
+        "tests/browser/media.spec.ts"
+      ],
+      "source_sha256": "9dbc691ef57f5925f3ed53e5b564e72a5877399ab31271a5830fea67f9b5bd99"
+    },
+    {
+      "time": "2026-10-28T05:23:53.190Z",
+      "source": "R08",
+      "line": 211,
+      "kind": "patch",
+      "files": [
+        "src/ui/App.vue"
+      ],
+      "source_sha256": "587044233a6a27751ea4be2e266347034036b771692df0df89c66d283099da20"
+    },
+    {
+      "time": "2026-10-28T05:25:30.213Z",
+      "source": "R08",
+      "line": 234,
+      "kind": "patch",
+      "files": [
+        "src/ui/App.vue"
+      ],
+      "source_sha256": "57134dd6e87026206e4dea5e02c2faaa399f9346b5cb23f40640348bea99efa8"
+    },
+    {
+      "time": "2026-10-28T05:28:20.508Z",
+      "source": "R07",
+      "line": 311,
+      "kind": "patch",
+      "files": [
+        "src/services.ts"
+      ],
+      "source_sha256": "36f4e98f28069631d282bd4447dbcf47f91320f9e73befbf36fdaddddfd7e07c"
+    },
+    {
+      "time": "2026-10-28T05:28:30.986Z",
+      "source": "R01",
+      "line": 722,
+      "kind": "patch",
+      "files": [
+        "src/types.ts",
+        "src/runtime.ts",
+        "vite.extension.config.ts",
+        "vite.userscript.config.ts",
+        "vite.test.config.ts",
+        "vitest.config.ts",
+        "playwright.config.ts"
+      ],
+      "source_sha256": "193a515a00428cbb0c28368bf175ef87b80c0bfd20d9cfda2de0c99851c4fc54"
+    },
+    {
+      "time": "2026-10-28T05:30:00.413Z",
+      "source": "R07",
+      "line": 320,
+      "kind": "patch",
+      "files": [
+        "src/services.ts"
+      ],
+      "source_sha256": "8beeb8fb9e31f1da50da233ca4955139a50ed730ff5baff02ae7e61d49fa004e"
+    },
+    {
+      "time": "2026-10-28T05:31:56.613Z",
+      "source": "R07",
+      "line": 335,
+      "kind": "patch",
+      "files": [
+        "src/services.ts"
+      ],
+      "source_sha256": "45ffdac8b7e1746d13845bfe675f47571d587ec5f10558efa1616f4ec315f3e7"
+    },
+    {
+      "time": "2026-10-28T05:33:46.386Z",
+      "source": "R01",
+      "line": 777,
+      "kind": "patch",
+      "files": [
+        "src/runtime.ts",
+        "vite.userscript.config.ts",
+        "scripts/build.mjs"
+      ],
+      "source_sha256": "eabfb61c2827b39896ac0f0293db903e015db0affb6d14c4b3bafaa94177e7fa"
+    },
+    {
+      "time": "2026-10-28T05:34:37.244Z",
+      "source": "R07",
+      "line": 347,
+      "kind": "patch",
+      "files": [
+        "tests/services.test.ts"
+      ],
+      "source_sha256": "a709d0d327c26d77f68322b7b1f3b75940ba6d9bfc82437b898fd4ba24ae4b6e"
+    },
+    {
+      "time": "2026-10-28T05:35:30.490Z",
+      "source": "R07",
+      "line": 370,
+      "kind": "patch",
+      "files": [
+        "tests/services.test.ts"
+      ],
+      "source_sha256": "0f75dfc92b5c18163423ad73885acce6e7f54fe90f4303f5f1b10f028d570a57"
+    },
+    {
+      "time": "2026-10-28T05:37:12.404Z",
+      "source": "R07",
+      "line": 387,
+      "kind": "patch",
+      "files": [
+        "src/services.ts",
+        "tests/services.test.ts"
+      ],
+      "source_sha256": "71297fef74534b695df4e1705f40231c9e4bf6df282b0545c11aec15f0dcb5f6"
+    },
+    {
+      "time": "2026-10-28T05:42:21.500Z",
+      "source": "R09",
+      "line": 331,
+      "kind": "patch",
+      "files": [
+        "src/media.ts",
+        "src/types.ts",
+        "src/services.ts",
+        "src/offscreen.ts",
+        "src/userscript.ts",
+        "tests/services.test.ts",
+        "tests/media.test.ts"
+      ],
+      "source_sha256": "0b8f52fe7042644c6ef7bf92d948133b04c27c8ecf88ad95a12586ff8f28ee37"
+    },
+    {
+      "time": "2026-10-28T05:43:50.308Z",
+      "source": "R08",
+      "line": 311,
+      "kind": "patch",
+      "files": [
+        "tests/browser/ui.spec.ts"
+      ],
+      "source_sha256": "34660c10b12c7ec1e6671ad06ec88b4795a95033f5059a328e79940a1172cc06"
+    },
+    {
+      "time": "2026-10-28T05:48:53.981Z",
+      "source": "R08",
+      "line": 359,
+      "kind": "patch",
+      "files": [
+        "tests/browser/ui.spec.ts"
+      ],
+      "source_sha256": "24e454125c900a2cad97a01945fc138d65d1c0fc7a65b11fa5c82a750d8dbb27"
+    },
+    {
+      "time": "2026-10-28T05:49:56.402Z",
+      "source": "R01",
+      "line": 928,
+      "kind": "patch",
+      "files": [
+        "vite.extension.config.ts",
+        "vite.userscript.config.ts",
+        "tsconfig.json",
+        "src/env.d.ts",
+        "scripts/cloud-origins.mjs",
+        "scripts/build.mjs",
+        "src/presence.ts",
+        "src/content.ts"
+      ],
+      "source_sha256": "f30c1fc0b078b5aaa782f23ddd8dad2bcecdfd9fff869f711bde59ce1df48dde"
+    },
+    {
+      "time": "2026-10-28T05:53:19.152Z",
+      "source": "R01",
+      "line": 952,
+      "kind": "patch",
+      "files": [
+        "src/background.ts",
+        "src/runtime.ts"
+      ],
+      "source_sha256": "c23ccfe7a8af4b57b945645007ac6ad11684a42bc4d6732f8c41a71247c23562"
+    },
+    {
+      "time": "2026-10-28T05:53:29.607Z",
+      "source": "R07",
+      "line": 462,
+      "kind": "patch",
+      "files": [
+        "src/settings.ts",
+        "src/services.ts"
+      ],
+      "source_sha256": "50e070ecfe992e6b09cb96c3433e4533ad0e11a30728a97d9abfd0da4364777d"
+    },
+    {
+      "time": "2026-10-28T05:54:18.792Z",
+      "source": "R08",
+      "line": 413,
+      "kind": "patch",
+      "files": [
+        "tests/browser/ui.spec.ts"
+      ],
+      "source_sha256": "31a693778b66b549d3667445f83bf8fe82cff5b44601159fab1e60d8aba45401"
+    },
+    {
+      "time": "2026-10-28T05:54:28.953Z",
+      "source": "R07",
+      "line": 469,
+      "kind": "patch",
+      "files": [
+        "src/sync.ts"
+      ],
+      "source_sha256": "e1696b74d48585d324c8da3ab80e1d39e75bf7617483b2a1b3e52805df85893f"
+    },
+    {
+      "time": "2026-10-28T05:55:02.841Z",
+      "source": "R07",
+      "line": 474,
+      "kind": "patch",
+      "files": [
+        "src/sync.ts"
+      ],
+      "source_sha256": "d4e96a7208290f31a53df0dbab19a85546ceee561936bf0da8921b7e7fbe89ca"
+    },
+    {
+      "time": "2026-10-28T05:56:14.117Z",
+      "source": "R08",
+      "line": 442,
+      "kind": "patch",
+      "files": [
+        "tests/browser/ui.spec.ts"
+      ],
+      "source_sha256": "684ab2342ed7399edea42f28bd1369c0b227b3b5b2820e4e2108294d6c59d5e0"
+    },
+    {
+      "time": "2026-10-28T05:56:37.554Z",
+      "source": "R09",
+      "line": 380,
+      "kind": "patch",
+      "files": [
+        "tests/background.test.ts"
+      ],
+      "source_sha256": "3a5760661d33710f0d415f5894a8b1042d0b385e1acd021cb439718b75c467f6"
+    },
+    {
+      "time": "2026-10-28T05:58:19.425Z",
+      "source": "R09",
+      "line": 408,
+      "kind": "patch",
+      "files": [
+        "tests/background.test.ts"
+      ],
+      "source_sha256": "15b03b62c3a2220b0f0c07cbb55e752834158e678a48d17b9760c2847865f626"
+    },
+    {
+      "time": "2026-10-28T05:58:28.322Z",
+      "source": "R07",
+      "line": 503,
+      "kind": "patch",
+      "files": [
+        "tests/sync.test.ts"
+      ],
+      "source_sha256": "14f3da0d6dc47272be2edca43b6d5cadcef2be2c803fa16325b2169f8b006064"
+    },
+    {
+      "time": "2026-10-28T05:58:39.381Z",
+      "source": "R01",
+      "line": 992,
+      "kind": "patch",
+      "files": [
+        "src/offscreen.ts",
+        "tests/browser/extension.spec.ts"
+      ],
+      "source_sha256": "bcf80f964737ce1997f345a419bc69651ae639d7e06e984cb0d18cdb676224d0"
+    },
+    {
+      "time": "2026-10-28T05:59:47.866Z",
+      "source": "R07",
+      "line": 516,
+      "kind": "patch",
+      "files": [
+        "src/sync.ts"
+      ],
+      "source_sha256": "3486f828fad018c2e966a57539fd1315ef8a8c81ee199edf47aa407348f5b367"
+    },
+    {
+      "time": "2026-10-28T06:00:10.240Z",
+      "source": "R01",
+      "line": 1011,
+      "kind": "patch",
+      "files": [
+        "src/media.ts"
+      ],
+      "source_sha256": "6bcfb081d6514502b9c0e4f032fdc172c7238ea7a6af85beabc715c302b3df6d"
+    },
+    {
+      "time": "2026-10-28T06:06:35.344Z",
+      "source": "R01",
+      "line": 1066,
+      "kind": "patch",
+      "files": [
+        "vite.extension.config.ts",
+        "vite.userscript.config.ts",
+        "scripts/build.mjs",
+        "scripts/cloud-origins.mjs",
+        "src/env.d.ts",
+        "tests/browser/extension.spec.ts"
+      ],
+      "source_sha256": "50d8dd8b3d761ccea2fa75780875d496e039923305234768ed201c81e2ebc763"
+    },
+    {
+      "time": "2026-10-28T06:28:45.130Z",
+      "source": "R07",
+      "line": 615,
+      "kind": "patch",
+      "files": [
+        "src/client.ts",
+        "tests/client.test.ts"
+      ],
+      "source_sha256": "94e47501792ca57e4a2dab933ab1113e5a0fae559d64cdc33a1a980bfdf35b41"
+    },
+    {
+      "time": "2026-10-28T06:35:50.562Z",
+      "source": "R01",
+      "line": 1222,
+      "kind": "patch",
+      "files": [
+        "src/rules.ts",
+        "src/ui/App.vue",
+        "tests/browser/extension.spec.ts"
+      ],
+      "source_sha256": "b1f54c807a61fefbc1294042f7baaa2b9da23d4a1aafa22e4667db9bc4a0e3a1"
+    },
+    {
+      "time": "2026-10-28T06:40:05.424Z",
+      "source": "R01",
+      "line": 1236,
+      "kind": "patch",
+      "files": [
+        "tests/rules.test.ts",
+        "src/ui/style.css",
+        "README.md"
+      ],
+      "source_sha256": "668bcaf9cfcfe248ccda86663b0817845dd0bb12e7bff7cb7a562fd415dd743c"
+    },
+    {
+      "time": "2026-10-28T06:40:05.424Z",
+      "source": "R01",
+      "line": 1236,
+      "kind": "shell replace",
+      "files": [
+        "src/ui/App.vue"
+      ],
+      "source_sha256": "e70bfb7ff7fd72c8938f18d90cc0d35e29ccd55e8a6d299f9d5329b9cb013633"
+    },
+    {
+      "time": "2026-10-28T06:45:52.647Z",
+      "source": "R01",
+      "line": 1259,
+      "kind": "patch",
+      "files": [
+        "src/runtime.ts"
+      ],
+      "source_sha256": "274c34b389474fe1a666da5d1477d848fec9288cc218c534615d8e92da307efc"
+    },
+    {
+      "time": "2026-10-28T06:48:24.215Z",
+      "source": "R01",
+      "line": 1277,
+      "kind": "patch",
+      "files": [
+        "scripts/build.mjs",
+        "src/background.ts",
+        "tests/background.test.ts"
+      ],
+      "source_sha256": "b54faaf24722df2aaa48ee8537373548b0d8b930764f7e3cd7fe14674e0438ef"
+    },
+    {
+      "time": "2026-10-28T07:07:50.199Z",
+      "source": "R01",
+      "line": 1371,
+      "kind": "patch",
+      "files": [
+        "vite.extension.config.ts",
+        "vite.userscript.config.ts",
+        "scripts/build.mjs"
+      ],
+      "source_sha256": "bcce4a25199969cf00030bf3d8fd33bbd54c95ffa89bd63dbc2669afaf25105d"
+    },
+    {
+      "time": "2026-10-28T07:13:56.544Z",
+      "source": "R01",
+      "line": 1394,
+      "kind": "patch",
+      "files": [
+        "src/services.ts",
+        "src/ui/App.vue",
+        "vite.userscript.config.ts"
+      ],
+      "source_sha256": "c55e67dd65944a5090dd5c24c802d56197dacc6ca788342b7958d4c68b16edfb"
+    },
+    {
+      "time": "2026-10-28T07:13:56.544Z",
+      "source": "R01",
+      "line": 1394,
+      "kind": "shell replace",
+      "files": [
+        "src/ui/App.vue"
+      ],
+      "source_sha256": "fcdc7e1e51c6da9371aa6beb6507c201cc54756feddb7b1a100e25366296274c"
+    },
+    {
+      "time": "2026-10-28T07:18:57.781Z",
+      "source": "R01",
+      "line": 1415,
+      "kind": "first staged lockfile",
+      "files": [
+        "pnpm-lock.yaml"
+      ],
+      "source_sha256": "39da0eb42f684dbf3cd31b59e32da9784840127156cd13e638e96fe05700032a"
+    },
+    {
+      "time": "2026-10-28T07:27:31.044Z",
+      "source": "R01",
+      "line": 1444,
+      "kind": "patch",
+      "files": [
+        "src/types.ts",
+        "src/runtime.ts",
+        "src/services.ts",
+        "src/background.ts",
+        "tests/browser/extension.spec.ts"
+      ],
+      "source_sha256": "9ec9105675172765bf07bf2fd4e97bfaa44da7ad5f85f561d2d7976bf3fef72c"
+    },
+    {
+      "time": "2026-10-28T07:44:33.547Z",
+      "source": "R07",
+      "line": 668,
+      "kind": "patch",
+      "files": [
+        "src/client.ts",
+        "tests/client.test.ts"
+      ],
+      "source_sha256": "bd10ab33174c690141b232ce338a627e61831c001335998a6597f5521696d793"
+    },
+    {
+      "time": "2026-10-28T07:45:26.915Z",
+      "source": "R07",
+      "line": 677,
+      "kind": "patch",
+      "files": [
+        "tests/client.test.ts"
+      ],
+      "source_sha256": "5f9ea938eca1a8c17910991808cf358022bfd50057ebcd2c91dfb88f7744eb9a"
+    }
+  ],
+  "snapshot_sha256": {
+    "scaffold": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "408febcce8c6cc636849ce9cb765978b9a60dc23cd12c59445c0f68f9f286274",
+      "src/types.ts": "d37915447eff6c46ef48751a96d4a0086000918d4fc2e6d76b167ac4b15953b1"
+    },
+    "foundation": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "0200314eee0ad8793f7b91f80dad8f184694260cf03d50b2b75309f8bd034f98",
+      "src/types.ts": "55ce8aa215834b8a6863632e069ac003fe1fdf13fb73590c4ac21fbcc4a0633a",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "a66954ed76765c9fa26efd95f7aaff43b8128339530f3545a21431864e7392cc",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "d613bce96f2a1b6621e0881289b39fec35575171cb1846f0f481beb1a3d8d774",
+      "src/client.ts": "71f97e3ba3625ab7f220fa170c819e5535850321ad3d88827c75e86f7e83a532",
+      "src/media.ts": "9cc2df2f71f1ff051a29e986e59a5d51e8cd4222fde49613a19252d5c94dd93d",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "7974e24de61dd0b33205f078fe7341b49651bec438ab6e111390aba47c599fed",
+      "src/rules.ts": "aa7ee06f082042ea551bbddde71290b5b30bf0cda7d2f836666ca57d6347404b",
+      "src/ui/style.css": "7287ff54c159972fc9a0f27cd0be0a9106f01f5561b975eecc2071942e4f27a3",
+      "tests/media.test.ts": "bce3e36c78ef7e7665cc1aa00706960aab1c947a46384cade18ba65c78f6f3e6",
+      "src/services.ts": "8f9559fa2c936df7f252109a16727a7f708052eed26d0b03d4fdf0ef92b4a1ae",
+      "src/sync.ts": "73db35770bbcb3ab99d29853ac584bc7af0ceb022cb8c3543a9742172aa88fcc",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "c8c67061e9bb420f6fbb0e08f5800364442c1d8ec1e21d6d3068c3d6744e2336",
+      "tests/client.test.ts": "fe0d20f1d0cc2851d00116c421519d9c20322b5603da53d3cb0a964aa6c2a4da"
+    },
+    "prototype": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "19df01ade2cc6aa9c54b46aaba0c73131e1fa9d896393c9b3d8642f9e63639c0",
+      "src/types.ts": "55ce8aa215834b8a6863632e069ac003fe1fdf13fb73590c4ac21fbcc4a0633a",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "87c4fb1943a7e5aaaba969ec90dfde4684f10994b64ec1a6b234623fb46579c7",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "d613bce96f2a1b6621e0881289b39fec35575171cb1846f0f481beb1a3d8d774",
+      "src/client.ts": "ea9dee58129f2086c2d04e14368da5ad4b145b40fb8f65510a22f023461fc9b4",
+      "src/media.ts": "54f0f4bd31ea632fc07966e02f22974f942f4587903ae957b31ca8417c5f8e0f",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "a82c9be666967deb927b5de8f060d1e5c43d3c03816538dbf471995601156823",
+      "src/rules.ts": "aa7ee06f082042ea551bbddde71290b5b30bf0cda7d2f836666ca57d6347404b",
+      "src/ui/style.css": "7287ff54c159972fc9a0f27cd0be0a9106f01f5561b975eecc2071942e4f27a3",
+      "tests/media.test.ts": "bce3e36c78ef7e7665cc1aa00706960aab1c947a46384cade18ba65c78f6f3e6",
+      "src/services.ts": "8f9559fa2c936df7f252109a16727a7f708052eed26d0b03d4fdf0ef92b4a1ae",
+      "src/sync.ts": "73db35770bbcb3ab99d29853ac584bc7af0ceb022cb8c3543a9742172aa88fcc",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "cb03cc1617e5495625f9ee4bf9babe6fb65df7eb394a1e2971aafa349a6e8383",
+      "tests/client.test.ts": "fe7e2f21868ebd20904978e53add4c7d12fa6d04b491d7b4095d4d002d284c45",
+      "src/background.ts": "b304beef3286573b1ef4c5ab21f9f5842f8ba6f1ad45c8f9ef47bb27dfa3edf3",
+      "src/offscreen.ts": "6da466f9e86efe55f81fff2593e13f20848c186907328b5ef88a44e45c917e9b",
+      "src/content.ts": "98e3c7c26ba8946777fe79a12f635d0154a4e6fcdab6f10924754b39de54546d",
+      "src/userscript.ts": "aa3e8a360f4e1d8c82c3a9832bd45279935df102b9cc379165514b29b8001201",
+      "src/options.ts": "0a7ba7da970ef6f003cd5cf729f7f32a4294cab3315e6b9d450fcb3799dca8e8",
+      "options.html": "83c84305c1c08d332842d68923c248de9c48040611cf5225696b34300608ded6",
+      "offscreen.html": "a3b37688b548d69da901cdda7c89b14a888aca7b2663fc78cc048b7980e1717a",
+      "tests/browser/fixture.html": "7cae2283d155b6c1c185a09fa52b958fa132710fb6a0b81ace7dc30879369904",
+      "tests/browser/media.spec.ts": "d4d7531e8544b987494fa89e684b191cccb22f175c0daf7147f50ddffd07bed1"
+    },
+    "build": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "19df01ade2cc6aa9c54b46aaba0c73131e1fa9d896393c9b3d8642f9e63639c0",
+      "src/types.ts": "5b2b94ef19bf6e6ad03c2a49be71a88b47ca40e98370c5defe76f99b890adaee",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "87c4fb1943a7e5aaaba969ec90dfde4684f10994b64ec1a6b234623fb46579c7",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "92616a6f4b6a1c3e2e0af7a3d66a969ce88663984c35e36b47786663b3f951a6",
+      "src/client.ts": "ea9dee58129f2086c2d04e14368da5ad4b145b40fb8f65510a22f023461fc9b4",
+      "src/media.ts": "54f0f4bd31ea632fc07966e02f22974f942f4587903ae957b31ca8417c5f8e0f",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "c9659925f49dcd26c2189af986dc9c841292b11c0d55cadac80fb1988313603a",
+      "src/rules.ts": "aa7ee06f082042ea551bbddde71290b5b30bf0cda7d2f836666ca57d6347404b",
+      "src/ui/style.css": "7287ff54c159972fc9a0f27cd0be0a9106f01f5561b975eecc2071942e4f27a3",
+      "tests/media.test.ts": "bce3e36c78ef7e7665cc1aa00706960aab1c947a46384cade18ba65c78f6f3e6",
+      "src/services.ts": "f89645d7ee46d32892402e3289b5f9557b5ab70bd6a95f555953048ae9b305d4",
+      "src/sync.ts": "73db35770bbcb3ab99d29853ac584bc7af0ceb022cb8c3543a9742172aa88fcc",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "cb03cc1617e5495625f9ee4bf9babe6fb65df7eb394a1e2971aafa349a6e8383",
+      "tests/client.test.ts": "fe7e2f21868ebd20904978e53add4c7d12fa6d04b491d7b4095d4d002d284c45",
+      "src/background.ts": "b304beef3286573b1ef4c5ab21f9f5842f8ba6f1ad45c8f9ef47bb27dfa3edf3",
+      "src/offscreen.ts": "6da466f9e86efe55f81fff2593e13f20848c186907328b5ef88a44e45c917e9b",
+      "src/content.ts": "98e3c7c26ba8946777fe79a12f635d0154a4e6fcdab6f10924754b39de54546d",
+      "src/userscript.ts": "aa3e8a360f4e1d8c82c3a9832bd45279935df102b9cc379165514b29b8001201",
+      "src/options.ts": "0a7ba7da970ef6f003cd5cf729f7f32a4294cab3315e6b9d450fcb3799dca8e8",
+      "options.html": "83c84305c1c08d332842d68923c248de9c48040611cf5225696b34300608ded6",
+      "offscreen.html": "a3b37688b548d69da901cdda7c89b14a888aca7b2663fc78cc048b7980e1717a",
+      "tests/browser/fixture.html": "7cae2283d155b6c1c185a09fa52b958fa132710fb6a0b81ace7dc30879369904",
+      "tests/browser/media.spec.ts": "d4d7531e8544b987494fa89e684b191cccb22f175c0daf7147f50ddffd07bed1",
+      "vite.extension.config.ts": "91ed9d92243ff677d23e6c85fbe1d1d860674b3d27c5978e6f94955522f0477f",
+      "vite.userscript.config.ts": "c35ea288cb201276a32eab6a6fa6a7c33e6dc16b3da2e5d5b2466af7c3280aef",
+      "vite.test.config.ts": "27e9c23effee127db8b4928fe4af8d0feabab7e308ac97b045fddbae5364234c",
+      "vitest.config.ts": "4e25fcaa16448d34d5f2d3ec2e2b28b08a949d9c2cee7d9992aea731ae200a51",
+      "playwright.config.ts": "b1394d55153ed6129c4df183fe85efb03a4a196e2c2467e3090cd8262f5d61b6",
+      "scripts/build.mjs": "45f3725d03bd74044b94d2ce1d2e346d71d3af231e6125083510c96a4a50ffd4",
+      "tests/services.test.ts": "c3f2a72e77a1c20e2cb0f4d5b432310713d539d4586c2e9a48ad375931b4ef9a"
+    },
+    "review": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "19df01ade2cc6aa9c54b46aaba0c73131e1fa9d896393c9b3d8642f9e63639c0",
+      "src/types.ts": "ceaf08a846453d87952a0f9963691cc90b48a4eea44c675a0afde50b32453ab7",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "65db009da62c37b41563465614eaa138719c2244ce18f6e045601d16d40055c7",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "92616a6f4b6a1c3e2e0af7a3d66a969ce88663984c35e36b47786663b3f951a6",
+      "src/client.ts": "ea9dee58129f2086c2d04e14368da5ad4b145b40fb8f65510a22f023461fc9b4",
+      "src/media.ts": "c035572b17812b281fca8cedc3f09f2500d17ed32f946a698ac44e98fe495e55",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "c9659925f49dcd26c2189af986dc9c841292b11c0d55cadac80fb1988313603a",
+      "src/rules.ts": "aa7ee06f082042ea551bbddde71290b5b30bf0cda7d2f836666ca57d6347404b",
+      "src/ui/style.css": "7287ff54c159972fc9a0f27cd0be0a9106f01f5561b975eecc2071942e4f27a3",
+      "tests/media.test.ts": "fe3691b539c064c555316db803a5f5243c367c15ea6000fa764beea51a8a9f6d",
+      "src/services.ts": "2bead66b13d4386b082a4516a071008ac5f4370eb23f4b82cc6f9c2cbf987728",
+      "src/sync.ts": "73db35770bbcb3ab99d29853ac584bc7af0ceb022cb8c3543a9742172aa88fcc",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "cb03cc1617e5495625f9ee4bf9babe6fb65df7eb394a1e2971aafa349a6e8383",
+      "tests/client.test.ts": "fe7e2f21868ebd20904978e53add4c7d12fa6d04b491d7b4095d4d002d284c45",
+      "src/background.ts": "b304beef3286573b1ef4c5ab21f9f5842f8ba6f1ad45c8f9ef47bb27dfa3edf3",
+      "src/offscreen.ts": "8169c75c0c9ae1a38fe852c89696c774b2dd80a0dda41b5b6d9395414a8a22ec",
+      "src/content.ts": "1a44aeb97e86ab0bc705396ad741d19662ca849d4dcee7f2e3b362fbea8e24ff",
+      "src/userscript.ts": "30ba83ada30507b36f38011e17f2f41da7c1786a6d753d114581dd7d611b2ad0",
+      "src/options.ts": "0a7ba7da970ef6f003cd5cf729f7f32a4294cab3315e6b9d450fcb3799dca8e8",
+      "options.html": "83c84305c1c08d332842d68923c248de9c48040611cf5225696b34300608ded6",
+      "offscreen.html": "a3b37688b548d69da901cdda7c89b14a888aca7b2663fc78cc048b7980e1717a",
+      "tests/browser/fixture.html": "7cae2283d155b6c1c185a09fa52b958fa132710fb6a0b81ace7dc30879369904",
+      "tests/browser/media.spec.ts": "d4d7531e8544b987494fa89e684b191cccb22f175c0daf7147f50ddffd07bed1",
+      "vite.extension.config.ts": "0c40f8052453e061c296f846577f6a0ae2ef6c9bf1a59704a2976a713370cbdd",
+      "vite.userscript.config.ts": "ae493cd10d08e798a2d449e77b4d3a6c9a444e5c4ff4dbe80c2cd5d957dd2926",
+      "vite.test.config.ts": "27e9c23effee127db8b4928fe4af8d0feabab7e308ac97b045fddbae5364234c",
+      "vitest.config.ts": "4e25fcaa16448d34d5f2d3ec2e2b28b08a949d9c2cee7d9992aea731ae200a51",
+      "playwright.config.ts": "b1394d55153ed6129c4df183fe85efb03a4a196e2c2467e3090cd8262f5d61b6",
+      "scripts/build.mjs": "7719085b8ea0162176d966870b1a62f7b4c00870727ffc336395271aeeade84b",
+      "tests/services.test.ts": "37862a9862214866b6cbedee4aea72311e65fcbb6bbcd446560492fde992c0d1",
+      "tests/browser/ui.spec.ts": "59033c0d51bf4b324aaf05d113dfdab4cbc4a3d03e8bee490747b9acb0fa951b",
+      "src/env.d.ts": "fe1557f5d852d3f4f7ead240343422e35a9e1510a2fb8f0d32fb02095abace26",
+      "scripts/cloud-origins.mjs": "d3a0a6b9ba2f5573bf8a88101935a9e247b955ee9f304869a079068fb1216b42",
+      "src/presence.ts": "58360694d7c238fbc4c1ef0181eacb652c964d532b7b3e9f7978506d55133c44"
+    },
+    "sync": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "19df01ade2cc6aa9c54b46aaba0c73131e1fa9d896393c9b3d8642f9e63639c0",
+      "src/types.ts": "ceaf08a846453d87952a0f9963691cc90b48a4eea44c675a0afde50b32453ab7",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "65db009da62c37b41563465614eaa138719c2244ce18f6e045601d16d40055c7",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "d79ec76d3be02188c957d6b900418a8d624ff2141db714047cdc12a7bec30946",
+      "src/client.ts": "ea9dee58129f2086c2d04e14368da5ad4b145b40fb8f65510a22f023461fc9b4",
+      "src/media.ts": "4304b9e327eb89406ba8249589b0455c5bd2a68c19b2edfec90e318aaf633e1b",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "c9659925f49dcd26c2189af986dc9c841292b11c0d55cadac80fb1988313603a",
+      "src/rules.ts": "aa7ee06f082042ea551bbddde71290b5b30bf0cda7d2f836666ca57d6347404b",
+      "src/ui/style.css": "7287ff54c159972fc9a0f27cd0be0a9106f01f5561b975eecc2071942e4f27a3",
+      "tests/media.test.ts": "fe3691b539c064c555316db803a5f5243c367c15ea6000fa764beea51a8a9f6d",
+      "src/services.ts": "a5a8bcf3d5c87c25a5a5dbdbd65d5b50f0e83d3d67f44a561fe85546ca03f4c8",
+      "src/sync.ts": "5a4d0b8310f40d7a84298ef1554b2ac8b2e5e22e7569beff659d3ae7e6bd39c5",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "cb03cc1617e5495625f9ee4bf9babe6fb65df7eb394a1e2971aafa349a6e8383",
+      "tests/client.test.ts": "fe7e2f21868ebd20904978e53add4c7d12fa6d04b491d7b4095d4d002d284c45",
+      "src/background.ts": "53485140f9b1b9b8fb0429e0739d6bd9e24f2efaea5d383cf4c82ae5767149a5",
+      "src/offscreen.ts": "23dc3618f7b36cfe758064f108d8f6ba25651af5d0764f40401f3d9a4aec34ac",
+      "src/content.ts": "1a44aeb97e86ab0bc705396ad741d19662ca849d4dcee7f2e3b362fbea8e24ff",
+      "src/userscript.ts": "30ba83ada30507b36f38011e17f2f41da7c1786a6d753d114581dd7d611b2ad0",
+      "src/options.ts": "0a7ba7da970ef6f003cd5cf729f7f32a4294cab3315e6b9d450fcb3799dca8e8",
+      "options.html": "83c84305c1c08d332842d68923c248de9c48040611cf5225696b34300608ded6",
+      "offscreen.html": "a3b37688b548d69da901cdda7c89b14a888aca7b2663fc78cc048b7980e1717a",
+      "tests/browser/fixture.html": "7cae2283d155b6c1c185a09fa52b958fa132710fb6a0b81ace7dc30879369904",
+      "tests/browser/media.spec.ts": "d4d7531e8544b987494fa89e684b191cccb22f175c0daf7147f50ddffd07bed1",
+      "vite.extension.config.ts": "0c40f8052453e061c296f846577f6a0ae2ef6c9bf1a59704a2976a713370cbdd",
+      "vite.userscript.config.ts": "ae493cd10d08e798a2d449e77b4d3a6c9a444e5c4ff4dbe80c2cd5d957dd2926",
+      "vite.test.config.ts": "27e9c23effee127db8b4928fe4af8d0feabab7e308ac97b045fddbae5364234c",
+      "vitest.config.ts": "4e25fcaa16448d34d5f2d3ec2e2b28b08a949d9c2cee7d9992aea731ae200a51",
+      "playwright.config.ts": "b1394d55153ed6129c4df183fe85efb03a4a196e2c2467e3090cd8262f5d61b6",
+      "scripts/build.mjs": "7719085b8ea0162176d966870b1a62f7b4c00870727ffc336395271aeeade84b",
+      "tests/services.test.ts": "37862a9862214866b6cbedee4aea72311e65fcbb6bbcd446560492fde992c0d1",
+      "tests/browser/ui.spec.ts": "ddeac4fcbfa3d936c2af865a3db07e75d9e1f054a839960b635c8dc4257dc060",
+      "src/env.d.ts": "fe1557f5d852d3f4f7ead240343422e35a9e1510a2fb8f0d32fb02095abace26",
+      "scripts/cloud-origins.mjs": "d3a0a6b9ba2f5573bf8a88101935a9e247b955ee9f304869a079068fb1216b42",
+      "src/presence.ts": "58360694d7c238fbc4c1ef0181eacb652c964d532b7b3e9f7978506d55133c44",
+      "src/settings.ts": "3a780e0438602eb9e62485d014949f27c885190d6fd04ea3cfdbc58b194199c4",
+      "tests/background.test.ts": "259bae9b79f0923ba847cb8259520428e227c51623012dfe2aad7f962e27de91",
+      "tests/sync.test.ts": "3685327715d235dacc054028ab7c30a1e685d5de81023a112e9f52e0389c2258",
+      "tests/browser/extension.spec.ts": "4d2a4eca66bb65f698f9d4b072cafd9a77879e9a5df625f55fcf17e665c78de1"
+    },
+    "permissions": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "19df01ade2cc6aa9c54b46aaba0c73131e1fa9d896393c9b3d8642f9e63639c0",
+      "src/types.ts": "ceaf08a846453d87952a0f9963691cc90b48a4eea44c675a0afde50b32453ab7",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "65db009da62c37b41563465614eaa138719c2244ce18f6e045601d16d40055c7",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "d79ec76d3be02188c957d6b900418a8d624ff2141db714047cdc12a7bec30946",
+      "src/client.ts": "38234a6a9a49852c7be12fe6996b14196b5c0d6d843ee2b3180ac9c1afda3437",
+      "src/media.ts": "4304b9e327eb89406ba8249589b0455c5bd2a68c19b2edfec90e318aaf633e1b",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "c9659925f49dcd26c2189af986dc9c841292b11c0d55cadac80fb1988313603a",
+      "src/rules.ts": "aa7ee06f082042ea551bbddde71290b5b30bf0cda7d2f836666ca57d6347404b",
+      "src/ui/style.css": "7287ff54c159972fc9a0f27cd0be0a9106f01f5561b975eecc2071942e4f27a3",
+      "tests/media.test.ts": "fe3691b539c064c555316db803a5f5243c367c15ea6000fa764beea51a8a9f6d",
+      "src/services.ts": "a5a8bcf3d5c87c25a5a5dbdbd65d5b50f0e83d3d67f44a561fe85546ca03f4c8",
+      "src/sync.ts": "5a4d0b8310f40d7a84298ef1554b2ac8b2e5e22e7569beff659d3ae7e6bd39c5",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "cb03cc1617e5495625f9ee4bf9babe6fb65df7eb394a1e2971aafa349a6e8383",
+      "tests/client.test.ts": "35f3a79cc62db728476f86a262cc125df610037b0fc93b8bc4af7a10ba187677",
+      "src/background.ts": "53485140f9b1b9b8fb0429e0739d6bd9e24f2efaea5d383cf4c82ae5767149a5",
+      "src/offscreen.ts": "23dc3618f7b36cfe758064f108d8f6ba25651af5d0764f40401f3d9a4aec34ac",
+      "src/content.ts": "1a44aeb97e86ab0bc705396ad741d19662ca849d4dcee7f2e3b362fbea8e24ff",
+      "src/userscript.ts": "30ba83ada30507b36f38011e17f2f41da7c1786a6d753d114581dd7d611b2ad0",
+      "src/options.ts": "0a7ba7da970ef6f003cd5cf729f7f32a4294cab3315e6b9d450fcb3799dca8e8",
+      "options.html": "83c84305c1c08d332842d68923c248de9c48040611cf5225696b34300608ded6",
+      "offscreen.html": "a3b37688b548d69da901cdda7c89b14a888aca7b2663fc78cc048b7980e1717a",
+      "tests/browser/fixture.html": "7cae2283d155b6c1c185a09fa52b958fa132710fb6a0b81ace7dc30879369904",
+      "tests/browser/media.spec.ts": "d4d7531e8544b987494fa89e684b191cccb22f175c0daf7147f50ddffd07bed1",
+      "vite.extension.config.ts": "4f84f0010dd2df574bb68673c7314e7d262412014e64abe11b98a40f6012825f",
+      "vite.userscript.config.ts": "6af528467d3980bc8aa70e0705fdc0fc50a1e814e829c59eff431f9f0ba146bb",
+      "vite.test.config.ts": "27e9c23effee127db8b4928fe4af8d0feabab7e308ac97b045fddbae5364234c",
+      "vitest.config.ts": "4e25fcaa16448d34d5f2d3ec2e2b28b08a949d9c2cee7d9992aea731ae200a51",
+      "playwright.config.ts": "b1394d55153ed6129c4df183fe85efb03a4a196e2c2467e3090cd8262f5d61b6",
+      "scripts/build.mjs": "fe2d5bcbab96b352eb63f18acfbf7f9728e1efcfe176677d7dec697636877a78",
+      "tests/services.test.ts": "37862a9862214866b6cbedee4aea72311e65fcbb6bbcd446560492fde992c0d1",
+      "tests/browser/ui.spec.ts": "ddeac4fcbfa3d936c2af865a3db07e75d9e1f054a839960b635c8dc4257dc060",
+      "src/presence.ts": "58360694d7c238fbc4c1ef0181eacb652c964d532b7b3e9f7978506d55133c44",
+      "src/settings.ts": "3a780e0438602eb9e62485d014949f27c885190d6fd04ea3cfdbc58b194199c4",
+      "tests/background.test.ts": "259bae9b79f0923ba847cb8259520428e227c51623012dfe2aad7f962e27de91",
+      "tests/sync.test.ts": "3685327715d235dacc054028ab7c30a1e685d5de81023a112e9f52e0389c2258",
+      "tests/browser/extension.spec.ts": "b24d1bdc4f0edb9ddfabd4ffd1d6dcf6b16f21ff1d1e5894a04c08269cf36db1"
+    },
+    "workflow": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "19df01ade2cc6aa9c54b46aaba0c73131e1fa9d896393c9b3d8642f9e63639c0",
+      "src/types.ts": "ceaf08a846453d87952a0f9963691cc90b48a4eea44c675a0afde50b32453ab7",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "65db009da62c37b41563465614eaa138719c2244ce18f6e045601d16d40055c7",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "cf781fc4410ee10fd7b770dadf4964164917ebc8f75add0f4f8dc77f8c6c63cb",
+      "src/client.ts": "38234a6a9a49852c7be12fe6996b14196b5c0d6d843ee2b3180ac9c1afda3437",
+      "src/media.ts": "4304b9e327eb89406ba8249589b0455c5bd2a68c19b2edfec90e318aaf633e1b",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "c8149d173baa353f301dc2fdf310a58f30bd6243619b7b3779c3a4e1462c9b38",
+      "src/rules.ts": "5254c1eafa5f77ba6ca29f05e5d67d7671e6eab5cf2d58f322d954191ac7144b",
+      "src/ui/style.css": "fa7b58a37e75c7bcbf5f573a355f01f46145e688d62d23e445595c8dbc3efee2",
+      "tests/media.test.ts": "fe3691b539c064c555316db803a5f5243c367c15ea6000fa764beea51a8a9f6d",
+      "src/services.ts": "a5a8bcf3d5c87c25a5a5dbdbd65d5b50f0e83d3d67f44a561fe85546ca03f4c8",
+      "src/sync.ts": "5a4d0b8310f40d7a84298ef1554b2ac8b2e5e22e7569beff659d3ae7e6bd39c5",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "b7f187edb11df9255bbf9ad4e21016f3852b5ca481e420e420597056da9f3e5f",
+      "tests/client.test.ts": "35f3a79cc62db728476f86a262cc125df610037b0fc93b8bc4af7a10ba187677",
+      "src/background.ts": "94a65158a28c9352ea9f45309292ae114d5820465e895f8b66b01eccd1c544ba",
+      "src/offscreen.ts": "23dc3618f7b36cfe758064f108d8f6ba25651af5d0764f40401f3d9a4aec34ac",
+      "src/content.ts": "1a44aeb97e86ab0bc705396ad741d19662ca849d4dcee7f2e3b362fbea8e24ff",
+      "src/userscript.ts": "30ba83ada30507b36f38011e17f2f41da7c1786a6d753d114581dd7d611b2ad0",
+      "src/options.ts": "0a7ba7da970ef6f003cd5cf729f7f32a4294cab3315e6b9d450fcb3799dca8e8",
+      "options.html": "83c84305c1c08d332842d68923c248de9c48040611cf5225696b34300608ded6",
+      "offscreen.html": "a3b37688b548d69da901cdda7c89b14a888aca7b2663fc78cc048b7980e1717a",
+      "tests/browser/fixture.html": "7cae2283d155b6c1c185a09fa52b958fa132710fb6a0b81ace7dc30879369904",
+      "tests/browser/media.spec.ts": "d4d7531e8544b987494fa89e684b191cccb22f175c0daf7147f50ddffd07bed1",
+      "vite.extension.config.ts": "4f84f0010dd2df574bb68673c7314e7d262412014e64abe11b98a40f6012825f",
+      "vite.userscript.config.ts": "6af528467d3980bc8aa70e0705fdc0fc50a1e814e829c59eff431f9f0ba146bb",
+      "vite.test.config.ts": "27e9c23effee127db8b4928fe4af8d0feabab7e308ac97b045fddbae5364234c",
+      "vitest.config.ts": "4e25fcaa16448d34d5f2d3ec2e2b28b08a949d9c2cee7d9992aea731ae200a51",
+      "playwright.config.ts": "b1394d55153ed6129c4df183fe85efb03a4a196e2c2467e3090cd8262f5d61b6",
+      "scripts/build.mjs": "52ab602150f8b0924b9f0597e1fc5b68272934e6acb31c2d90dc01569952e016",
+      "tests/services.test.ts": "37862a9862214866b6cbedee4aea72311e65fcbb6bbcd446560492fde992c0d1",
+      "tests/browser/ui.spec.ts": "ddeac4fcbfa3d936c2af865a3db07e75d9e1f054a839960b635c8dc4257dc060",
+      "src/presence.ts": "58360694d7c238fbc4c1ef0181eacb652c964d532b7b3e9f7978506d55133c44",
+      "src/settings.ts": "3a780e0438602eb9e62485d014949f27c885190d6fd04ea3cfdbc58b194199c4",
+      "tests/background.test.ts": "564c5eacc70cc5d08ad9b0be46d01038be95f60a7a95961ab6434d1c6eadae5b",
+      "tests/sync.test.ts": "3685327715d235dacc054028ab7c30a1e685d5de81023a112e9f52e0389c2258",
+      "tests/browser/extension.spec.ts": "11adb79ed59e3611392f24b3a65c0f8251b1abcec4da2fde1451ac7fc8a5a6a1",
+      "README.md": "d477b398aac01b6a28ec5aaa2d0e81fc2965efad1110bc0d47d8ab541c3809e4"
+    },
+    "encoding": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "19df01ade2cc6aa9c54b46aaba0c73131e1fa9d896393c9b3d8642f9e63639c0",
+      "src/types.ts": "ceaf08a846453d87952a0f9963691cc90b48a4eea44c675a0afde50b32453ab7",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "65db009da62c37b41563465614eaa138719c2244ce18f6e045601d16d40055c7",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "cf781fc4410ee10fd7b770dadf4964164917ebc8f75add0f4f8dc77f8c6c63cb",
+      "src/client.ts": "38234a6a9a49852c7be12fe6996b14196b5c0d6d843ee2b3180ac9c1afda3437",
+      "src/media.ts": "4304b9e327eb89406ba8249589b0455c5bd2a68c19b2edfec90e318aaf633e1b",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "6e90144e592b79d044a08d5f7c6ac45d61fffb15f7f21513a361487fdb1a81a0",
+      "src/rules.ts": "5254c1eafa5f77ba6ca29f05e5d67d7671e6eab5cf2d58f322d954191ac7144b",
+      "src/ui/style.css": "fa7b58a37e75c7bcbf5f573a355f01f46145e688d62d23e445595c8dbc3efee2",
+      "tests/media.test.ts": "fe3691b539c064c555316db803a5f5243c367c15ea6000fa764beea51a8a9f6d",
+      "src/services.ts": "80727b9efb18877f9408d8b99de658102c837817f4b74305d55bb4c1dc3206a7",
+      "src/sync.ts": "5a4d0b8310f40d7a84298ef1554b2ac8b2e5e22e7569beff659d3ae7e6bd39c5",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "b7f187edb11df9255bbf9ad4e21016f3852b5ca481e420e420597056da9f3e5f",
+      "tests/client.test.ts": "35f3a79cc62db728476f86a262cc125df610037b0fc93b8bc4af7a10ba187677",
+      "src/background.ts": "94a65158a28c9352ea9f45309292ae114d5820465e895f8b66b01eccd1c544ba",
+      "src/offscreen.ts": "23dc3618f7b36cfe758064f108d8f6ba25651af5d0764f40401f3d9a4aec34ac",
+      "src/content.ts": "1a44aeb97e86ab0bc705396ad741d19662ca849d4dcee7f2e3b362fbea8e24ff",
+      "src/userscript.ts": "30ba83ada30507b36f38011e17f2f41da7c1786a6d753d114581dd7d611b2ad0",
+      "src/options.ts": "0a7ba7da970ef6f003cd5cf729f7f32a4294cab3315e6b9d450fcb3799dca8e8",
+      "options.html": "83c84305c1c08d332842d68923c248de9c48040611cf5225696b34300608ded6",
+      "offscreen.html": "a3b37688b548d69da901cdda7c89b14a888aca7b2663fc78cc048b7980e1717a",
+      "tests/browser/fixture.html": "7cae2283d155b6c1c185a09fa52b958fa132710fb6a0b81ace7dc30879369904",
+      "tests/browser/media.spec.ts": "d4d7531e8544b987494fa89e684b191cccb22f175c0daf7147f50ddffd07bed1",
+      "vite.extension.config.ts": "4990b8eecd94cd8fd378730aede377b508c600a9387968030bb5bd7af99755d0",
+      "vite.userscript.config.ts": "bb575f283671300a96535f6e427bcd23d97dd4d2fb554c35eaa95cd549c44612",
+      "vite.test.config.ts": "27e9c23effee127db8b4928fe4af8d0feabab7e308ac97b045fddbae5364234c",
+      "vitest.config.ts": "4e25fcaa16448d34d5f2d3ec2e2b28b08a949d9c2cee7d9992aea731ae200a51",
+      "playwright.config.ts": "b1394d55153ed6129c4df183fe85efb03a4a196e2c2467e3090cd8262f5d61b6",
+      "scripts/build.mjs": "dd29b54533e2f48a8d2bac11e8191f70fb28d9f96163cd92c8ae4e89819364e2",
+      "tests/services.test.ts": "37862a9862214866b6cbedee4aea72311e65fcbb6bbcd446560492fde992c0d1",
+      "tests/browser/ui.spec.ts": "ddeac4fcbfa3d936c2af865a3db07e75d9e1f054a839960b635c8dc4257dc060",
+      "src/presence.ts": "58360694d7c238fbc4c1ef0181eacb652c964d532b7b3e9f7978506d55133c44",
+      "src/settings.ts": "3a780e0438602eb9e62485d014949f27c885190d6fd04ea3cfdbc58b194199c4",
+      "tests/background.test.ts": "564c5eacc70cc5d08ad9b0be46d01038be95f60a7a95961ab6434d1c6eadae5b",
+      "tests/sync.test.ts": "3685327715d235dacc054028ab7c30a1e685d5de81023a112e9f52e0389c2258",
+      "tests/browser/extension.spec.ts": "11adb79ed59e3611392f24b3a65c0f8251b1abcec4da2fde1451ac7fc8a5a6a1",
+      "README.md": "d477b398aac01b6a28ec5aaa2d0e81fc2965efad1110bc0d47d8ab541c3809e4"
+    },
+    "staged": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "19df01ade2cc6aa9c54b46aaba0c73131e1fa9d896393c9b3d8642f9e63639c0",
+      "src/types.ts": "ceaf08a846453d87952a0f9963691cc90b48a4eea44c675a0afde50b32453ab7",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "65db009da62c37b41563465614eaa138719c2244ce18f6e045601d16d40055c7",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "cf781fc4410ee10fd7b770dadf4964164917ebc8f75add0f4f8dc77f8c6c63cb",
+      "src/client.ts": "38234a6a9a49852c7be12fe6996b14196b5c0d6d843ee2b3180ac9c1afda3437",
+      "src/media.ts": "4304b9e327eb89406ba8249589b0455c5bd2a68c19b2edfec90e318aaf633e1b",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "6e90144e592b79d044a08d5f7c6ac45d61fffb15f7f21513a361487fdb1a81a0",
+      "src/rules.ts": "5254c1eafa5f77ba6ca29f05e5d67d7671e6eab5cf2d58f322d954191ac7144b",
+      "src/ui/style.css": "fa7b58a37e75c7bcbf5f573a355f01f46145e688d62d23e445595c8dbc3efee2",
+      "tests/media.test.ts": "fe3691b539c064c555316db803a5f5243c367c15ea6000fa764beea51a8a9f6d",
+      "src/services.ts": "80727b9efb18877f9408d8b99de658102c837817f4b74305d55bb4c1dc3206a7",
+      "src/sync.ts": "5a4d0b8310f40d7a84298ef1554b2ac8b2e5e22e7569beff659d3ae7e6bd39c5",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "b7f187edb11df9255bbf9ad4e21016f3852b5ca481e420e420597056da9f3e5f",
+      "tests/client.test.ts": "35f3a79cc62db728476f86a262cc125df610037b0fc93b8bc4af7a10ba187677",
+      "src/background.ts": "94a65158a28c9352ea9f45309292ae114d5820465e895f8b66b01eccd1c544ba",
+      "src/offscreen.ts": "23dc3618f7b36cfe758064f108d8f6ba25651af5d0764f40401f3d9a4aec34ac",
+      "src/content.ts": "1a44aeb97e86ab0bc705396ad741d19662ca849d4dcee7f2e3b362fbea8e24ff",
+      "src/userscript.ts": "30ba83ada30507b36f38011e17f2f41da7c1786a6d753d114581dd7d611b2ad0",
+      "src/options.ts": "0a7ba7da970ef6f003cd5cf729f7f32a4294cab3315e6b9d450fcb3799dca8e8",
+      "options.html": "83c84305c1c08d332842d68923c248de9c48040611cf5225696b34300608ded6",
+      "offscreen.html": "a3b37688b548d69da901cdda7c89b14a888aca7b2663fc78cc048b7980e1717a",
+      "tests/browser/fixture.html": "7cae2283d155b6c1c185a09fa52b958fa132710fb6a0b81ace7dc30879369904",
+      "tests/browser/media.spec.ts": "d4d7531e8544b987494fa89e684b191cccb22f175c0daf7147f50ddffd07bed1",
+      "vite.extension.config.ts": "4990b8eecd94cd8fd378730aede377b508c600a9387968030bb5bd7af99755d0",
+      "vite.userscript.config.ts": "bb575f283671300a96535f6e427bcd23d97dd4d2fb554c35eaa95cd549c44612",
+      "vite.test.config.ts": "27e9c23effee127db8b4928fe4af8d0feabab7e308ac97b045fddbae5364234c",
+      "vitest.config.ts": "4e25fcaa16448d34d5f2d3ec2e2b28b08a949d9c2cee7d9992aea731ae200a51",
+      "playwright.config.ts": "b1394d55153ed6129c4df183fe85efb03a4a196e2c2467e3090cd8262f5d61b6",
+      "scripts/build.mjs": "dd29b54533e2f48a8d2bac11e8191f70fb28d9f96163cd92c8ae4e89819364e2",
+      "tests/services.test.ts": "37862a9862214866b6cbedee4aea72311e65fcbb6bbcd446560492fde992c0d1",
+      "tests/browser/ui.spec.ts": "ddeac4fcbfa3d936c2af865a3db07e75d9e1f054a839960b635c8dc4257dc060",
+      "src/presence.ts": "58360694d7c238fbc4c1ef0181eacb652c964d532b7b3e9f7978506d55133c44",
+      "src/settings.ts": "3a780e0438602eb9e62485d014949f27c885190d6fd04ea3cfdbc58b194199c4",
+      "tests/background.test.ts": "564c5eacc70cc5d08ad9b0be46d01038be95f60a7a95961ab6434d1c6eadae5b",
+      "tests/sync.test.ts": "3685327715d235dacc054028ab7c30a1e685d5de81023a112e9f52e0389c2258",
+      "tests/browser/extension.spec.ts": "11adb79ed59e3611392f24b3a65c0f8251b1abcec4da2fde1451ac7fc8a5a6a1",
+      "README.md": "d477b398aac01b6a28ec5aaa2d0e81fc2965efad1110bc0d47d8ab541c3809e4",
+      "pnpm-lock.yaml": "f988c1740d231e2799e44fbdddfe4f1cefbe9fb3708aab789a54111a00bf7acd"
+    },
+    "rpc": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "19df01ade2cc6aa9c54b46aaba0c73131e1fa9d896393c9b3d8642f9e63639c0",
+      "src/types.ts": "694cc84d63d4150c60d041a636d49075507794698bd0c06fe332e9ec69d8517b",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "65db009da62c37b41563465614eaa138719c2244ce18f6e045601d16d40055c7",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "4ca5ac9bfe3f4b60b68e07b3920f5f6192fa82d0f0c05e107b10479982d56e51",
+      "src/client.ts": "38234a6a9a49852c7be12fe6996b14196b5c0d6d843ee2b3180ac9c1afda3437",
+      "src/media.ts": "4304b9e327eb89406ba8249589b0455c5bd2a68c19b2edfec90e318aaf633e1b",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "6e90144e592b79d044a08d5f7c6ac45d61fffb15f7f21513a361487fdb1a81a0",
+      "src/rules.ts": "5254c1eafa5f77ba6ca29f05e5d67d7671e6eab5cf2d58f322d954191ac7144b",
+      "src/ui/style.css": "fa7b58a37e75c7bcbf5f573a355f01f46145e688d62d23e445595c8dbc3efee2",
+      "tests/media.test.ts": "fe3691b539c064c555316db803a5f5243c367c15ea6000fa764beea51a8a9f6d",
+      "src/services.ts": "ebe5a019c4b829b641c0c7e86df7c80ac516c0c32f4f564108bee60ca2959be4",
+      "src/sync.ts": "5a4d0b8310f40d7a84298ef1554b2ac8b2e5e22e7569beff659d3ae7e6bd39c5",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "b7f187edb11df9255bbf9ad4e21016f3852b5ca481e420e420597056da9f3e5f",
+      "tests/client.test.ts": "35f3a79cc62db728476f86a262cc125df610037b0fc93b8bc4af7a10ba187677",
+      "src/background.ts": "802ae93587fe57a920af839752a42d2db8d8d830ef7e8a69c14b920ccbe1f7c6",
+      "src/offscreen.ts": "23dc3618f7b36cfe758064f108d8f6ba25651af5d0764f40401f3d9a4aec34ac",
+      "src/content.ts": "1a44aeb97e86ab0bc705396ad741d19662ca849d4dcee7f2e3b362fbea8e24ff",
+      "src/userscript.ts": "30ba83ada30507b36f38011e17f2f41da7c1786a6d753d114581dd7d611b2ad0",
+      "src/options.ts": "0a7ba7da970ef6f003cd5cf729f7f32a4294cab3315e6b9d450fcb3799dca8e8",
+      "options.html": "83c84305c1c08d332842d68923c248de9c48040611cf5225696b34300608ded6",
+      "offscreen.html": "a3b37688b548d69da901cdda7c89b14a888aca7b2663fc78cc048b7980e1717a",
+      "tests/browser/fixture.html": "7cae2283d155b6c1c185a09fa52b958fa132710fb6a0b81ace7dc30879369904",
+      "tests/browser/media.spec.ts": "d4d7531e8544b987494fa89e684b191cccb22f175c0daf7147f50ddffd07bed1",
+      "vite.extension.config.ts": "4990b8eecd94cd8fd378730aede377b508c600a9387968030bb5bd7af99755d0",
+      "vite.userscript.config.ts": "bb575f283671300a96535f6e427bcd23d97dd4d2fb554c35eaa95cd549c44612",
+      "vite.test.config.ts": "27e9c23effee127db8b4928fe4af8d0feabab7e308ac97b045fddbae5364234c",
+      "vitest.config.ts": "4e25fcaa16448d34d5f2d3ec2e2b28b08a949d9c2cee7d9992aea731ae200a51",
+      "playwright.config.ts": "b1394d55153ed6129c4df183fe85efb03a4a196e2c2467e3090cd8262f5d61b6",
+      "scripts/build.mjs": "dd29b54533e2f48a8d2bac11e8191f70fb28d9f96163cd92c8ae4e89819364e2",
+      "tests/services.test.ts": "37862a9862214866b6cbedee4aea72311e65fcbb6bbcd446560492fde992c0d1",
+      "tests/browser/ui.spec.ts": "ddeac4fcbfa3d936c2af865a3db07e75d9e1f054a839960b635c8dc4257dc060",
+      "src/presence.ts": "58360694d7c238fbc4c1ef0181eacb652c964d532b7b3e9f7978506d55133c44",
+      "src/settings.ts": "3a780e0438602eb9e62485d014949f27c885190d6fd04ea3cfdbc58b194199c4",
+      "tests/background.test.ts": "564c5eacc70cc5d08ad9b0be46d01038be95f60a7a95961ab6434d1c6eadae5b",
+      "tests/sync.test.ts": "3685327715d235dacc054028ab7c30a1e685d5de81023a112e9f52e0389c2258",
+      "tests/browser/extension.spec.ts": "c97e91583e865fc7acc0823de749e9e4d89fb26af080eba5b1b9da22ff9c155b",
+      "README.md": "d477b398aac01b6a28ec5aaa2d0e81fc2965efad1110bc0d47d8ab541c3809e4",
+      "pnpm-lock.yaml": "f988c1740d231e2799e44fbdddfe4f1cefbe9fb3708aab789a54111a00bf7acd"
+    },
+    "final": {
+      ".gitignore": "159f3ec2e669b422d94128a18c02496d6d0eaae71ebb272ecd86fe9477d7cc4e",
+      "package.json": "19df01ade2cc6aa9c54b46aaba0c73131e1fa9d896393c9b3d8642f9e63639c0",
+      "src/types.ts": "694cc84d63d4150c60d041a636d49075507794698bd0c06fe332e9ec69d8517b",
+      "src/site.ts": "b5126216de329d267da8c9c46c9ec6de488f425c37da4d3496cf268e99de2053",
+      "src/ui/mount.ts": "5da143f0a5147be18f767c7ee50128563d9b2331a6bd310ebb34a6e5179faab0",
+      "tsconfig.json": "65db009da62c37b41563465614eaa138719c2244ce18f6e045601d16d40055c7",
+      "src/store.ts": "7317383440fa629f8099828cb650e787122c9210a719d513fb2b9a228966dd0f",
+      "src/runtime.ts": "4ca5ac9bfe3f4b60b68e07b3920f5f6192fa82d0f0c05e107b10479982d56e51",
+      "src/client.ts": "826b163f399b0102b96081faac644ee440bfcbcf204d071981cfd89be55e10d9",
+      "src/media.ts": "4304b9e327eb89406ba8249589b0455c5bd2a68c19b2edfec90e318aaf633e1b",
+      "src/vendor.d.ts": "4f2a8033245e6995dbb8f190df500837f4892a1ab444ec2459150757fbc438a6",
+      "src/ui/App.vue": "6e90144e592b79d044a08d5f7c6ac45d61fffb15f7f21513a361487fdb1a81a0",
+      "src/rules.ts": "5254c1eafa5f77ba6ca29f05e5d67d7671e6eab5cf2d58f322d954191ac7144b",
+      "src/ui/style.css": "fa7b58a37e75c7bcbf5f573a355f01f46145e688d62d23e445595c8dbc3efee2",
+      "tests/media.test.ts": "fe3691b539c064c555316db803a5f5243c367c15ea6000fa764beea51a8a9f6d",
+      "src/services.ts": "ebe5a019c4b829b641c0c7e86df7c80ac516c0c32f4f564108bee60ca2959be4",
+      "src/sync.ts": "5a4d0b8310f40d7a84298ef1554b2ac8b2e5e22e7569beff659d3ae7e6bd39c5",
+      "tests/site.test.ts": "943751608256f0d082184db391e90ac3d1f9f223da4af945d94c44f4898bc486",
+      "tests/rules.test.ts": "b7f187edb11df9255bbf9ad4e21016f3852b5ca481e420e420597056da9f3e5f",
+      "tests/client.test.ts": "9632f343f9a3df5ad0a28b6f44d441aa86b1b534433950434505e581eba4e6e8",
+      "src/background.ts": "802ae93587fe57a920af839752a42d2db8d8d830ef7e8a69c14b920ccbe1f7c6",
+      "src/offscreen.ts": "23dc3618f7b36cfe758064f108d8f6ba25651af5d0764f40401f3d9a4aec34ac",
+      "src/content.ts": "1a44aeb97e86ab0bc705396ad741d19662ca849d4dcee7f2e3b362fbea8e24ff",
+      "src/userscript.ts": "30ba83ada30507b36f38011e17f2f41da7c1786a6d753d114581dd7d611b2ad0",
+      "src/options.ts": "0a7ba7da970ef6f003cd5cf729f7f32a4294cab3315e6b9d450fcb3799dca8e8",
+      "options.html": "83c84305c1c08d332842d68923c248de9c48040611cf5225696b34300608ded6",
+      "offscreen.html": "a3b37688b548d69da901cdda7c89b14a888aca7b2663fc78cc048b7980e1717a",
+      "tests/browser/fixture.html": "7cae2283d155b6c1c185a09fa52b958fa132710fb6a0b81ace7dc30879369904",
+      "tests/browser/media.spec.ts": "d4d7531e8544b987494fa89e684b191cccb22f175c0daf7147f50ddffd07bed1",
+      "vite.extension.config.ts": "4990b8eecd94cd8fd378730aede377b508c600a9387968030bb5bd7af99755d0",
+      "vite.userscript.config.ts": "bb575f283671300a96535f6e427bcd23d97dd4d2fb554c35eaa95cd549c44612",
+      "vite.test.config.ts": "27e9c23effee127db8b4928fe4af8d0feabab7e308ac97b045fddbae5364234c",
+      "vitest.config.ts": "4e25fcaa16448d34d5f2d3ec2e2b28b08a949d9c2cee7d9992aea731ae200a51",
+      "playwright.config.ts": "b1394d55153ed6129c4df183fe85efb03a4a196e2c2467e3090cd8262f5d61b6",
+      "scripts/build.mjs": "dd29b54533e2f48a8d2bac11e8191f70fb28d9f96163cd92c8ae4e89819364e2",
+      "tests/services.test.ts": "37862a9862214866b6cbedee4aea72311e65fcbb6bbcd446560492fde992c0d1",
+      "tests/browser/ui.spec.ts": "ddeac4fcbfa3d936c2af865a3db07e75d9e1f054a839960b635c8dc4257dc060",
+      "src/presence.ts": "58360694d7c238fbc4c1ef0181eacb652c964d532b7b3e9f7978506d55133c44",
+      "src/settings.ts": "3a780e0438602eb9e62485d014949f27c885190d6fd04ea3cfdbc58b194199c4",
+      "tests/background.test.ts": "564c5eacc70cc5d08ad9b0be46d01038be95f60a7a95961ab6434d1c6eadae5b",
+      "tests/sync.test.ts": "3685327715d235dacc054028ab7c30a1e685d5de81023a112e9f52e0389c2258",
+      "tests/browser/extension.spec.ts": "c97e91583e865fc7acc0823de749e9e4d89fb26af080eba5b1b9da22ff9c155b",
+      "README.md": "d477b398aac01b6a28ec5aaa2d0e81fc2965efad1110bc0d47d8ab541c3809e4",
+      "pnpm-lock.yaml": "f988c1740d231e2799e44fbdddfe4f1cefbe9fb3708aab789a54111a00bf7acd"
+    }
+  }
+}
