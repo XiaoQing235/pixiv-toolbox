@@ -14,7 +14,7 @@ export async function exclusive<T>(name: string, run: () => Promise<T>): Promise
   if (!navigator.locks) throw new Error('浏览器不支持安全的跨标签任务协调');
   return navigator.locks.request(`pixiv-toolbox:${name}`, run);
 }
-async function enqueueWithSettings(services: Services, refs: Ref[], settings: Settings, options: Parameters<Services['enqueue']>[1] = {}, expectedAccount?: string): Promise<void> {
+export async function enqueueWithSettings(services: Services, refs: Ref[], settings: Settings, options: Parameters<Services['enqueue']>[1] = {}, expectedAccount?: string): Promise<void> {
   const snapshot = checkedSettings(settings);
   for (const ref of refs) if (!/^\d+$/.test(ref.id) || !['illust', 'novel'].includes(ref.kind)) throw new Error('作品编号不正确');
   if (options.pages?.some(page => !Number.isInteger(page) || page < 0)) throw new Error('作品页码不正确');
@@ -40,9 +40,10 @@ export async function createServices(runtime: Runtime): Promise<Services> {
   const service: Services = {
     runtime, client, media, settings: checkedSettings(await store.get('settings') || defaults),
     configure: async settings => { const next = checkedSettings(settings); await exclusive('settings', async () => { await store.set('settings', next); service.settings = next; }); runtime.notify(); },
-    enqueue: (refs, options) => enqueueWithSettings(service, refs, service.settings, options),
+    enqueue: (refs, options) => runtime.command ? runtime.command('enqueue', [refs, options || {}, service.settings]) : enqueueWithSettings(service, refs, service.settings, options),
     tasks: async () => (await store.list<Task>('task:')).map(row => row.value).sort((a, b) => b.created - a.created),
     taskAction: async (id, action) => {
+      if (runtime.command) return runtime.command('taskAction', [id, action]);
       controllers.get(id)?.abort();
       await exclusive(`task:${id}`, async () => {
         const task = await store.get<Task>(`task:${id}`);

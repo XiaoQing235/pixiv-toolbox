@@ -13,7 +13,7 @@ test('packaged MV3 loads its worker and options in an isolated Chromium profile'
     // Only replace the fixture's external data source; extension messaging,
     // IndexedDB, content script and options are the actual packaged code.
     await worker.evaluate(() => {
-      globalThis.fetch = async () => new Response('<html><meta name="global-data" content="{}"></html>', { headers: { 'Content-Type': 'text/html' } });
+      globalThis.fetch = async () => new Response('<html><meta id="meta-global-data" content="{&quot;userData&quot;:{&quot;id&quot;:&quot;1&quot;},&quot;token&quot;:&quot;fixture&quot;}"></html>', { headers: { 'Content-Type': 'text/html' } });
     });
     const page = await context.newPage();
     const errors: string[] = [];
@@ -28,6 +28,20 @@ test('packaged MV3 loads its worker and options in an isolated Chromium profile'
     await expect(page.getByText('设置已保存', { exact: true })).toBeVisible();
     await page.reload();
     await expect(page.getByRole('slider').first()).toHaveValue('70');
+    const task = await page.evaluate(async () => {
+      const call = async (op: string, args: unknown[] = []) => {
+        const result = await chrome.runtime.sendMessage({ app: 'pixiv-toolbox', op, args });
+        if (!result.ok) throw new Error(result.error);
+        return result.value;
+      };
+      await call('set', ['suspended', true]);
+      const settings = await call('get', ['settings']);
+      await call('enqueue', [[{ id: '101', kind: 'illust' }], {}, settings]);
+      const [record] = await call('list', ['task:']);
+      await call('taskAction', [record.value.id, 'pause']);
+      return (await call('get', [record.id])).state;
+    });
+    expect(task).toBe('paused');
     expect(errors).toEqual([]);
     await page.screenshot({ path: info.outputPath('options.png'), fullPage: true });
   } finally { await context.close(); }

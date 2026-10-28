@@ -1,5 +1,6 @@
 import { database } from './store';
-import { allowed, decode, encode, fetchResult } from './runtime';
+import { allowed, decode, encode, fetchResult, localExtensionRuntime } from './runtime';
+import { createServices, enqueueWithSettings } from './services';
 import type { HttpOptions, Schedule, Task } from './types';
 
 const store = database();
@@ -76,6 +77,18 @@ function maintain() {
   lifecycle = next.catch(() => {});
   return next;
 }
+async function saveBlob(args: unknown[]) {
+  temporaryUsers++;
+  try {
+    await maintain();
+    const result = await chrome.runtime.sendMessage({ app: 'pixiv-toolbox', op: 'blob', args });
+    if (!result?.ok) throw new Error(result?.error || '文件处理失败');
+  } finally { temporaryUsers--; void maintain(); }
+}
+const executor = localExtensionRuntime(async (data, name, conflict = 'uniquify', receipt) => {
+  if (typeof data === 'string') return saveDownload(data, name, conflict as chrome.downloads.FilenameConflictAction, receipt);
+  return saveBlob([encode(new Uint8Array(await data.arrayBuffer())), data.type, name, conflict, receipt]);
+}, () => { void maintain().then(broadcast); });
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
   if (message?.app !== 'pixiv-toolbox' || message.op === 'changed' || message.op === 'blob') return;
   if (sender.id !== chrome.runtime.id || !sender.url || !(sender.url.startsWith(chrome.runtime.getURL('')) || new URL(sender.url).origin === 'https://www.pixiv.net')) return;
@@ -86,6 +99,11 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
       case 'set': await store.set(String(first), second); return;
       case 'remove': await store.remove(String(first)); return;
       case 'list': return store.list(String(first));
+      case 'enqueue': return enqueueWithSettings(await createServices(executor), first, third, second);
+      case 'taskAction': {
+        if (typeof first !== 'string' || !['pause', 'resume', 'remove', 'confirm'].includes(second)) throw new Error('任务操作不正确');
+        return (await createServices(executor)).taskAction(first, second);
+      }
       case 'request': {
         const options = second as HttpOptions & { encodedBody?: boolean; requestId?: string };
         if (options.encodedBody) options.body = decode(options.body as string);
@@ -98,15 +116,7 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
       }
       case 'abortRequest': requests.get(String(first))?.abort(); return;
       case 'save': return saveDownload(String(first), String(second), third || 'uniquify', fourth);
-      case 'saveBlob': {
-        temporaryUsers++;
-        try {
-          await maintain();
-          const result = await chrome.runtime.sendMessage({ app: 'pixiv-toolbox', op: 'blob', args: message.args });
-          if (!result?.ok) throw new Error(result?.error || '文件处理失败');
-          return;
-        } finally { temporaryUsers--; void maintain(); }
-      }
+      case 'saveBlob': return saveBlob(message.args);
       case 'cancel': return cancelDownload(String(first));
       case 'options': return chrome.runtime.openOptionsPage();
       case 'notify': await maintain(); return broadcast();

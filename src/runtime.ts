@@ -43,6 +43,7 @@ export function extensionRuntime(): Runtime {
   }
   return {
     mode: 'extension',
+    command: (op, args) => call(op, args),
     store: { get: id => call('get', [id]), set: (id, value) => call('set', [id, value]), remove: id => call('remove', [id]), list: prefix => call('list', [prefix]) },
     request: async (url, options = {}) => {
       options.signal?.throwIfAborted();

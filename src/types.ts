@@ -18,6 +18,7 @@ export interface Store {
 }
 export interface Runtime {
   mode: 'extension' | 'userscript'; store: Store;
+  command?<T = void>(op: 'enqueue' | 'taskAction', args: unknown[]): Promise<T>;
   request(url: string, options?: HttpOptions): Promise<HttpResult>;
   save(data: Blob | string, filename: string, conflict?: 'uniquify' | 'overwrite' | 'prompt', receipt?: string, signal?: AbortSignal): Promise<void>;
   notify(): void;
