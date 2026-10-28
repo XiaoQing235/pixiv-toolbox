@@ -1,8 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { defaults, filename, inTrigger, matches, refKey } from '../src/rules';
+import { defaults, filename, inTrigger, matches, refKey, parsePages } from '../src/rules';
 import type { Work } from '../src/types';
 
 const work: Work = { kind: 'illust', id: '42', title: 'A/B:作品', userId: '7', userName: 'Artist', thumb: '', pages: [], tags: ['Original'], bookmarkCount: null, bookmarked: false, following: false, restricted: 0, ai: false, updated: '' };
+
+describe('page selection', () => {
+  it('converts displayed ranges to zero-based pages without duplicates', () => {
+    expect(parsePages('1,3-5,3', 5)).toEqual([0, 2, 3, 4]);
+  });
+  it('rejects invalid ranges before expanding them', () => {
+    for (const input of ['', '0', '4-2', '1-999999999', '1.5', '-1']) expect(() => parsePages(input, 5)).toThrow();
+  });
+});
 
 describe('filters', () => {
   it('keeps unknown bookmark counts and separates illustration and novel read IDs', () => {

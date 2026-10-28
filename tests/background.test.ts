@@ -28,6 +28,7 @@ beforeEach(async () => {
   downloads.onChanged.addListener.mockImplementation(listener => { changed = listener; });
   vi.stubGlobal('chrome', {
     downloads,
+    action: { onClicked: { addListener: vi.fn() } },
     runtime: {
       id: 'test-extension', getURL: (path: string) => `chrome-extension://test-extension/${path}`,
       onMessage: { addListener: vi.fn() }, onInstalled: { addListener: vi.fn() }, onStartup: { addListener: vi.fn() },

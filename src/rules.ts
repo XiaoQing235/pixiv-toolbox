@@ -50,3 +50,14 @@ export function inTrigger(rect: { left: number; top: number; width: number; heig
   const vertical = rect.height * ratio / 200;
   return Math.abs(x - rect.left - rect.width / 2) <= horizontal && Math.abs(y - rect.top - rect.height / 2) <= vertical;
 }
+export function parsePages(input: string, count: number): number[] {
+  const selected = new Set<number>();
+  for (const token of input.trim().split(/[,，\s]+/)) {
+    const range = /^(\d+)(?:-(\d+))?$/.exec(token);
+    if (!range) throw new Error('页码格式应为 1,3-5');
+    const first = Number(range[1]), last = Number(range[2] || range[1]);
+    if (first < 1 || last < first || last > count) throw new Error('页码超出作品范围');
+    for (let page = first; page <= last; page++) selected.add(page - 1);
+  }
+  return [...selected];
+}

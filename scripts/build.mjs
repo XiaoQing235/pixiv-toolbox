@@ -37,7 +37,7 @@ await writeFile('dist/extension/manifest.json', JSON.stringify({
     { matches: ['https://www.pixiv.net/*'], js: ['presence.js'], run_at: 'document_start' },
     { matches: ['https://www.pixiv.net/*'], js: ['content.js'], run_at: 'document_idle' },
   ],
-  options_page: 'options.html', action: { default_title: 'Pixiv Toolbox', default_popup: 'options.html' },
+  options_page: 'options.html', action: { default_title: 'Pixiv Toolbox' },
   declarative_net_request: { rule_resources: [{ id: 'images', enabled: true, path: 'rules.json' }] },
 }, null, 2));
 await writeFile('dist/extension/rules.json', JSON.stringify([{ id: 1, priority: 1, action: { type: 'modifyHeaders', requestHeaders: [{ header: 'Referer', operation: 'set', value: 'https://www.pixiv.net/' }] }, condition: { requestDomains: ['pximg.net'], resourceTypes: ['xmlhttprequest', 'image', 'media', 'other'] } }]));

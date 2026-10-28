@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 test('packaged MV3 loads its worker and options in an isolated Chromium profile', async ({}, info) => {
   const extension = resolve('dist/extension');
   const context = await chromium.launchPersistentContext(info.outputPath('profile'), {
-    channel: 'chromium', headless: true,
+    channel: process.env.PIXIV_TEST_BROWSER ? undefined : 'chromium', executablePath: process.env.PIXIV_TEST_BROWSER, headless: true,
     args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
   });
   try {

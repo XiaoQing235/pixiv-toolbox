@@ -120,3 +120,4 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
 chrome.alarms.onAlarm.addListener(() => { void maintain().then(broadcast); });
 chrome.runtime.onInstalled.addListener(() => { void chrome.alarms.create('plans', { periodInMinutes: 1 }); });
 chrome.runtime.onStartup.addListener(() => { void chrome.alarms.create('plans', { periodInMinutes: 1 }); void maintain(); });
+chrome.action.onClicked.addListener(() => { void chrome.runtime.openOptionsPage(); });

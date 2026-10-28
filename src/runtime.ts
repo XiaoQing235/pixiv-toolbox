@@ -18,9 +18,22 @@ export async function fetchResult(store: Store, url: string, options: HttpOption
   if (!await allowed(url, store)) throw new Error('该请求地址未获得访问许可');
   const response = await fetch(url, { method: options.method, headers: options.headers, body: options.body instanceof Uint8Array ? new Uint8Array(options.body).buffer : options.body,
     signal: options.signal, credentials: new URL(url).hostname === 'www.pixiv.net' ? 'include' : 'omit', redirect: 'error' });
-  const size = Number(response.headers.get('content-length') || 0);
-  if (size > 256 * 1024 * 1024) throw new Error('文件超过 256 MiB 内存处理上限');
-  return { status: response.status, headers: Object.fromEntries(response.headers), body: options.bytes ? new Uint8Array(await response.arrayBuffer()) : await response.text() };
+  const limit = (options.bytes ? 256 : 16) * 1024 * 1024;
+  if (Number(response.headers.get('content-length') || 0) > limit) throw new Error('响应超过内存处理上限');
+  const reader = response.body?.getReader();
+  const chunks: Uint8Array[] = []; let size = 0;
+  try {
+    while (reader) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > limit) { await reader.cancel(); throw new Error('响应超过内存处理上限'); }
+      chunks.push(value);
+    }
+  } finally { reader?.releaseLock(); }
+  const bytes = new Uint8Array(size); let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  return { status: response.status, headers: Object.fromEntries(response.headers), body: options.bytes ? bytes : new TextDecoder().decode(bytes) };
 }
 export function extensionRuntime(): Runtime {
   async function call<T>(op: string, args: unknown[] = []): Promise<T> {
@@ -73,9 +86,10 @@ export function userscriptRuntime(): Runtime {
         const abort = () => { handle.abort(); reject(new DOMException('已取消', 'AbortError')); };
         const clean = () => options.signal?.removeEventListener('abort', abort);
         const handle = GM.xmlHttpRequest({ url, method: (options.method || 'GET') as 'GET', headers: options.headers, data: options.body instanceof Uint8Array ? new Blob([new Uint8Array(options.body)]) : options.body,
-          responseType: options.bytes ? 'arraybuffer' : undefined, timeout: 60000,
+          responseType: options.bytes ? 'arraybuffer' : undefined, redirect: 'error', timeout: 60000,
+          onprogress: progress => { if (progress.loaded > (options.bytes ? 256 : 16) * 1024 * 1024) { clean(); handle.abort(); reject(new Error('响应超过内存处理上限')); } },
           onload: result => { clean(); resolve({ status: result.status, headers: Object.fromEntries(result.responseHeaders.trim().split(/\r?\n/).filter(line => line.includes(':')).map(line => { const i = line.indexOf(':'); return [line.slice(0, i).toLowerCase(), line.slice(i + 1).trim()]; })), body: options.bytes ? new Uint8Array(result.response) : result.responseText }); },
-          onerror: () => { clean(); reject(new Error('网络请求失败')); }, ontimeout: () => { clean(); reject(new Error('网络请求超时')); }, onabort: clean });
+          onerror: () => { clean(); reject(new Error('网络请求失败')); }, ontimeout: () => { clean(); reject(new Error('网络请求超时')); }, onabort: () => { clean(); reject(new DOMException('已取消', 'AbortError')); } });
         options.signal?.addEventListener('abort', abort, { once: true });
       });
     },
