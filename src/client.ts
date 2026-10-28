@@ -32,6 +32,36 @@ const refs = (value: unknown, kind: WorkKind, field = 'id'): Ref[] => array(valu
   .filter(item => !optional(item).isAdContainer && (typeof item === 'string' || typeof item === 'number' || optional(item)[field] != null))
   .map(item => ({ kind, id: id(typeof item === 'object' ? object(item)[field] : item) }));
 
+/** Only reads Pixiv's JSON containers; script contents remain raw text. */
+function accountJson(html: string): { next?: string; legacy?: string } {
+  const entities: Record<string, string> = { quot: '"', apos: "'", amp: '&', lt: '<', gt: '>' };
+  const decode = (value: string) => value.replace(/&(quot|apos|amp|lt|gt|#(?:[xX][\da-fA-F]+|\d+));/g, (original, entity: string) => {
+    if (entity[0] !== '#') return entities[entity];
+    const hexadecimal = entity[1].toLowerCase() === 'x';
+    const point = Number.parseInt(entity.slice(hexadecimal ? 2 : 1), hexadecimal ? 16 : 10);
+    return point > 0 && point <= 0x10ffff && !(point >= 0xd800 && point <= 0xdfff) ? String.fromCodePoint(point) : original;
+  });
+  const result: { next?: string; legacy?: string } = {};
+  const tags = /<!--[\s\S]*?-->|<(script|meta)\b((?:"[^"]*"|'[^']*'|[^'">])*)>/gi;
+  const closingScript = /<\/script\s*>/gi;
+  for (let tag = tags.exec(html); tag; tag = tags.exec(html)) {
+    if (!tag[1]) continue;
+    const attributes: Record<string, string> = {};
+    for (const attribute of tag[2].matchAll(/([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g)) {
+      const name = attribute[1].toLowerCase();
+      if (['id', 'name', 'content'].includes(name) && attributes[name] === undefined) attributes[name] = decode(attribute[2] ?? attribute[3] ?? attribute[4] ?? '');
+    }
+    if (tag[1].toLowerCase() === 'script') {
+      closingScript.lastIndex = tags.lastIndex;
+      const closing = closingScript.exec(html);
+      if (!closing) break;
+      if (attributes.id === '__NEXT_DATA__' && result.next === undefined) result.next = html.slice(tags.lastIndex, closing.index);
+      tags.lastIndex = closingScript.lastIndex;
+    } else if ((attributes.name === 'global-data' || attributes.id === 'meta-global-data') && result.legacy === undefined) result.legacy = attributes.content;
+  }
+  return result;
+}
+
 function wait(ms: number, signal?: AbortSignal): Promise<void> {
   signal?.throwIfAborted();
   if (ms <= 0) return Promise.resolve();
@@ -101,15 +131,13 @@ export function createClient(runtime: Runtime): PixivClient {
     try {
       const html = await request(`/?toolbox_time=${Date.now()}`);
       const head = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? html;
-      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const { next, legacy } = accountJson(html);
       let state: Data = {};
-      const next = doc.querySelector('#__NEXT_DATA__')?.textContent;
       if (next) {
         const page = optional(optional(optional(JSON.parse(next)).props).pageProps);
         const serialized = page.serverSerializedPreloadedState;
         state = typeof serialized === 'string' ? object(JSON.parse(serialized)) : optional(serialized);
       }
-      const legacy = doc.querySelector('meta[name="global-data"], meta[id="meta-global-data"]')?.getAttribute('content');
       const global = legacy ? object(JSON.parse(legacy)) : {};
       const self = optional(optional(state.userData).self);
       const uid = self.id ?? self.userId ?? optional(global.userData).id

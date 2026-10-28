@@ -18,7 +18,7 @@ function mock(handler: (url: URL, options?: HttpOptions) => HttpResult | Promise
 
 // Advance only the client's rate limiter; API responses remain deterministic local fixtures.
 beforeEach(() => vi.useFakeTimers());
-afterEach(() => vi.useRealTimers());
+afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
 async function run<T>(promise: Promise<T>): Promise<T> {
   const settled = promise.then(value => ({ value }), error => ({ error }));
   await vi.runAllTimersAsync();
@@ -26,6 +26,40 @@ async function run<T>(promise: Promise<T>): Promise<T> {
   if ('error' in result) throw result.error;
   return result.value;
 }
+
+describe('account data without DOMParser', () => {
+  it.each(['double', 'single'])('reads the complete Next.js HTML fixture with %s-quoted attributes in a worker', async quote => {
+    let html = String(identity('12').body);
+    if (quote === 'single') html = html.replace('id="__NEXT_DATA__"', "id='__NEXT_DATA__'");
+    const old = new DOMParser().parseFromString(html, 'text/html').querySelector('#__NEXT_DATA__')!.textContent!;
+    const expected = JSON.parse(JSON.parse(old).props.pageProps.serverSerializedPreloadedState);
+    vi.stubGlobal('DOMParser', undefined);
+    const { client, request } = mock((url, options) => url.pathname === '/' ? response(html) : options?.method === 'POST' ? response([]) : wrapped(artwork));
+    expect(await run(client.account())).toBe(expected.userData.self.id);
+    await run(client.bookmark({ id: '42', kind: 'illust' }, true));
+    expect(request.mock.calls.find(([, options]) => options?.method === 'POST')![1]!.headers?.['x-csrf-token']).toBe(expected.api.token);
+  });
+  it.each([
+    '<html><meta id="meta-global-data" content="{&quot;userData&quot;:{&quot;id&quot;:&quot;1&quot;},&quot;token&quot;:&quot;fixture&quot;}"></html>',
+    `<html><head><meta content='{"userData":{"id":"2"},"token":"fixture-\\&quot;&apos;&amp;&lt;&gt;&#65;&#x1F600;"}' name='global-data'></head><body></body></html>`,
+    '<html><head><meta name="global-data" content="{&#34;userData&#34;:{&#34;id&#34;:&#34;&#51;&#34;},&#34;token&#34;:&#34;fixture-&#x26;&#34;}"></head></html>',
+  ])('matches DOM parsing for legacy JSON attributes while running without a DOM', async html => {
+    const old = new DOMParser().parseFromString(html, 'text/html').querySelector('meta[name="global-data"], meta[id="meta-global-data"]')!.getAttribute('content')!;
+    const expected = JSON.parse(old);
+    vi.stubGlobal('DOMParser', undefined);
+    const { client, request } = mock((url, options) => url.pathname === '/' ? response(html) : options?.method === 'POST' ? response([]) : wrapped(artwork));
+    expect(await run(client.account())).toBe(expected.userData.id);
+    await run(client.bookmark({ id: '42', kind: 'illust' }, true));
+    expect(request.mock.calls.find(([, options]) => options?.method === 'POST')![1]!.headers?.['x-csrf-token']).toBe(expected.token);
+  });
+  it('ignores example containers inside comments and unrelated script text', async () => {
+    const fake = `<meta name='global-data' content='{"userData":{"id":"99"},"token":"wrong"}'>`;
+    const html = `<html><head><!-- ${fake} --><script>const example = ${JSON.stringify(fake)};</script><meta name='global-data' content='{"userData":{"id":"1"},"token":"fixture"}'></head></html>`;
+    vi.stubGlobal('DOMParser', undefined);
+    const { client } = mock(() => response(html));
+    expect(await run(client.account())).toBe('1');
+  });
+});
 
 describe('work data', () => {
   it('normalizes a work and caches completed values without leaking caller mutation', async () => {
