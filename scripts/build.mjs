@@ -1,5 +1,5 @@
 import { build } from 'vite';
-import { mkdir, readFile, writeFile, rm, readdir } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, rm, readdir, copyFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,7 +23,27 @@ await rm(output, { recursive: true, force: true });
 for (const mode of ['background', 'presence', 'content', 'pages']) { await build({ configFile: 'vite.extension.config.ts', mode }); scan(); }
 await build({ configFile: 'vite.userscript.config.ts' }); scan();
 const { version } = JSON.parse(await readFile('package.json', 'utf8'));
+const mediabunny = JSON.parse(await readFile('node_modules/mediabunny/package.json', 'utf8'));
+const notice = await readFile('THIRD-PARTY-NOTICES.txt', 'utf8');
+const mpl = await readFile('licenses/MPL-2.0.txt', 'utf8');
+const mit = await readFile('LICENSE', 'utf8');
+const upstreamMpl = await readFile('node_modules/mediabunny/LICENSE', 'utf8');
+if (mediabunny.license !== 'MPL-2.0' || !notice.includes(`Mediabunny ${mediabunny.version}.`)
+  || !notice.includes(`mediabunny/tree/v${mediabunny.version}`)
+  || !notice.includes(`mediabunny-${mediabunny.version}.tgz`)
+  || mpl.replaceAll('\r\n', '\n') !== upstreamMpl.replaceAll('\r\n', '\n')) throw new Error('请更新 Mediabunny 许可证和源码说明');
 await mkdir('dist/extension', { recursive: true });
+await mkdir('dist/extension/licenses', { recursive: true });
+await copyFile('LICENSE', 'dist/extension/LICENSE');
+await copyFile('THIRD-PARTY-NOTICES.txt', 'dist/extension/THIRD-PARTY-NOTICES.txt');
+await copyFile('licenses/MPL-2.0.txt', 'dist/extension/licenses/MPL-2.0.txt');
+const scriptPath = 'dist/userscript/pixiv-toolbox.user.js';
+const script = await readFile(scriptPath, 'utf8');
+const marker = '// ==/UserScript==';
+const parts = script.split(marker);
+const legalText = `${notice}\n${mpl}\n${mit}`;
+if (parts.length !== 2 || legalText.includes('*/')) throw new Error('无法安全地嵌入用户脚本许可信息');
+await writeFile(scriptPath, `${parts[0]}${marker}\n\n/*\n${legalText}\n*/${parts[1]}`);
 await writeFile('dist/extension/manifest.json', JSON.stringify({
   manifest_version: 3, name: 'Pixiv Toolbox', version,
   description: '预览、阅读、整理和下载 Pixiv 作品', minimum_chrome_version: '120',

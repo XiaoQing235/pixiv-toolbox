@@ -91,4 +91,4 @@ pnpm build
 
 ## 许可证
 
-本项目采用 [MIT License](LICENSE)。第三方依赖遵循各自的许可证，例如 Mediabunny 使用 MPL-2.0。
+本项目采用 [MIT License](LICENSE)。第三方依赖遵循各自的许可证；Mediabunny 的许可证和对应版本的源码地址见[第三方说明](THIRD-PARTY-NOTICES.txt)。
