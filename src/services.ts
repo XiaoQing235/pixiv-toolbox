@@ -1,9 +1,9 @@
 import { createClient } from './client';
-import { createMedia } from './media';
+import { createPreviewMedia } from './media';
 import { defaults, refKey, matches } from './rules';
 import { database } from './store';
 import { syncData, uploadFile } from './sync';
-import type { CloudConfig, Reading, Ref, Runtime, Schedule, Services, Settings, Task } from './types';
+import type { CloudConfig, Media, Reading, Ref, Runtime, Schedule, Services, Settings, Task } from './types';
 
 let chosenDirectory: FileSystemDirectoryHandle | undefined;
 const controllers = new Map<string, AbortController>();
@@ -58,7 +58,7 @@ async function enqueueWithSettings(services: Services, refs: Ref[], settings: Se
 }
 export async function createServices(runtime: Runtime): Promise<Services> {
   const client = createClient(runtime);
-  const media = createMedia(runtime);
+  const media = createPreviewMedia(runtime);
   const store = runtime.store;
   const service: Services = {
     runtime, client, media, settings: checkedSettings(await store.get('settings') || defaults),
@@ -211,8 +211,8 @@ export async function saveFile(runtime: Runtime, data: Blob | string, name: stri
   } finally { signal.removeEventListener('abort', abort); }
 }
 
-export function startRunner(services: Services): () => void {
-  const { runtime, client, media } = services;
+export function startRunner(services: Services, media: Media): () => void {
+  const { runtime, client } = services;
   const store = runtime.store;
   let stopped = false;
   let ticking = false;

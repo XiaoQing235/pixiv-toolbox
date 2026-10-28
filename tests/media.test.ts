@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, afterEach } from 'vitest';
 import { crc32 } from 'node:zlib';
 import { strFromU8, unzipSync, zipSync } from 'fflate';
-import { createMedia, embedXmp } from '../src/media';
+import { createMedia, createPreviewMedia, embedXmp } from '../src/media';
 import * as rules from '../src/rules';
 import type { Runtime, Settings, Work } from '../src/types';
 
@@ -122,7 +122,7 @@ describe('frame lifecycle', () => {
   it('returns exact delays and releases all bitmaps with idempotent disposal', async () => {
     const close = vi.fn();
     vi.stubGlobal('createImageBitmap', vi.fn(async () => ({ width: 1, height: 1, close })));
-    const result = await createMedia(runtime(zip)).frames({ ...work, animation });
+    const result = await createPreviewMedia(runtime(zip)).frames({ ...work, animation });
     expect(result.images).toHaveLength(2);
     expect(result.delays).toEqual([40, 90]);
     result.dispose();
@@ -134,7 +134,7 @@ describe('frame lifecycle', () => {
     const controller = new AbortController();
     const close = vi.fn();
     vi.stubGlobal('createImageBitmap', vi.fn(async () => { controller.abort(); return { width: 1, height: 1, close }; }));
-    await expect(createMedia(runtime(zip)).frames({ ...work, animation }, controller.signal)).rejects.toMatchObject({ name: 'AbortError' });
+    await expect(createPreviewMedia(runtime(zip)).frames({ ...work, animation }, controller.signal)).rejects.toMatchObject({ name: 'AbortError' });
     expect(close).toHaveBeenCalledOnce();
   });
 
@@ -144,7 +144,7 @@ describe('frame lifecycle', () => {
     view(huge).setUint32(20, 100_000);
     const decode = vi.fn();
     vi.stubGlobal('createImageBitmap', decode);
-    await expect(createMedia(runtime(zipSync({ '0.png': huge, '1.png': png }))).frames({ ...work, animation })).rejects.toThrow('预算');
+    await expect(createPreviewMedia(runtime(zipSync({ '0.png': huge, '1.png': png }))).frames({ ...work, animation })).rejects.toThrow('预算');
     expect(decode).not.toHaveBeenCalled();
   });
 });

@@ -1,5 +1,6 @@
 import { userscriptRuntime } from './runtime';
 import { createServices, startRunner } from './services';
+import { createMedia } from './media';
 import { mount } from './ui/mount';
 
 const runtime = userscriptRuntime();
@@ -15,7 +16,7 @@ window.postMessage({ product: 'pixiv-toolbox', type: 'query-extension' }, locati
 // Startup arbitration is separate from hover activation; hover has no delay.
 setTimeout(() => {
   if (extensionPresent) return;
-  void createServices(runtime).then(service => { if (extensionPresent) return; cleanup = mount(service); stop = startRunner(service); });
+  void createServices(runtime).then(service => { if (extensionPresent) return; cleanup = mount(service); stop = startRunner(service, createMedia(runtime)); });
 }, 80);
 GM.registerMenuCommand('恢复脚本任务（请先停用扩展）', async () => {
   if (extensionPresent) { alert('请先停用 MV3 扩展并刷新页面'); return; }

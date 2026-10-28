@@ -351,8 +351,34 @@ async function novelEpub(runtime: Runtime, work: Work, signal?: AbortSignal) {
   return archive((async function* () { yield* files; })(), 'application/epub+zip', signal);
 }
 
+export function createPreviewMedia(runtime: Runtime): Pick<Media, 'frames'> {
+  return {
+    async frames(work, signal) {
+      const { files, frames } = await animationFiles(runtime, work, signal);
+      const images: ImageBitmap[] = [];
+      const dispose = () => { for (const image of images.splice(0)) image.close(); };
+      let pixels = 0;
+      try {
+        for (const frame of frames) {
+          const size = imageDimensions(files[frame.file]);
+          if (pixels + size.width * size.height > MAX_PREVIEW_PIXELS) throw new Error('动图预览超过 128 MiB 解码预算；仍可下载源 ZIP 或转换文件');
+          const image = await decodeFrame(files[frame.file], signal);
+          images.push(image);
+          delete files[frame.file];
+          pixels += image.width * image.height;
+          if (pixels > MAX_PREVIEW_PIXELS) throw new Error('动图预览超过 128 MiB 解码预算；仍可下载源 ZIP 或转换文件');
+          await pause();
+          check(signal);
+        }
+        return { images, delays: frames.map(frame => frame.delay), dispose };
+      } catch (error) { dispose(); throw error; }
+    },
+  };
+}
+
 export function createMedia(runtime: Runtime): Media {
   return {
+    ...createPreviewMedia(runtime),
     async *export(work, settings, options = {}) {
       const { signal, asset } = options;
       check(signal);
@@ -397,26 +423,6 @@ export function createMedia(runtime: Runtime): Media {
         })();
         yield { name: filename(work, settings, undefined, 'zip'), data: await archive(entries, 'application/zip', signal) };
       } else for (const page of pages) yield await exportPage(page);
-    },
-    async frames(work, signal) {
-      const { files, frames } = await animationFiles(runtime, work, signal);
-      const images: ImageBitmap[] = [];
-      const dispose = () => { for (const image of images.splice(0)) image.close(); };
-      let pixels = 0;
-      try {
-        for (const frame of frames) {
-          const size = imageDimensions(files[frame.file]);
-          if (pixels + size.width * size.height > MAX_PREVIEW_PIXELS) throw new Error('动图预览超过 128 MiB 解码预算；仍可下载源 ZIP 或转换文件');
-          const image = await decodeFrame(files[frame.file], signal);
-          images.push(image);
-          delete files[frame.file];
-          pixels += image.width * image.height;
-          if (pixels > MAX_PREVIEW_PIXELS) throw new Error('动图预览超过 128 MiB 解码预算；仍可下载源 ZIP 或转换文件');
-          await pause();
-          check(signal);
-        }
-        return { images, delays: frames.map(frame => frame.delay), dispose };
-      } catch (error) { dispose(); throw error; }
     },
   };
 }

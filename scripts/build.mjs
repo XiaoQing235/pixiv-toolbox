@@ -4,31 +4,24 @@ import { spawnSync } from 'node:child_process';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { zipSync } from 'fflate';
+import { cloudOrigins } from './cloud-origins.mjs';
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 process.chdir(projectRoot);
 const output = resolve(projectRoot, 'dist');
 if (dirname(output) !== projectRoot) throw new Error('无效构建输出目录');
-let cloudOrigins = [];
-try { cloudOrigins = JSON.parse(await readFile('.local/allowed-origins.json', 'utf8')); }
-catch (error) { if (error.code !== 'ENOENT') throw error; }
-if (!Array.isArray(cloudOrigins) || cloudOrigins.some(origin => {
-  try { const url = new URL(origin); return url.protocol !== 'https:' || url.origin !== origin || origin.includes('*') || url.username || url.password; } catch { return true; }
-})) throw new Error('云端主机必须是明确的 HTTPS origin，不允许通配地址');
 
 function scan() {
   const files = spawnSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', '-z'], { encoding: 'utf8' });
   if (files.status) throw new Error('无法列出工作树扫描范围');
   const paths = [...new Set(files.stdout.split('\0').filter(Boolean))];
-  let result = spawnSync('betterleaks', ['dir', '--redact', '--no-banner', ...paths], { encoding: 'utf8' });
+  const engine = process.platform === 'win32' ? ['--regex-engine', 'stdlib'] : [];
+  const result = spawnSync('betterleaks', ['dir', '--redact', '--no-banner', ...engine, ...paths], { encoding: 'utf8' });
   process.stdout.write(result.stdout || ''); process.stderr.write(result.stderr || '');
-  if (result.status && /rename|cross.device|different disk/i.test(result.stderr || '')) {
-    result = spawnSync('betterleaks', ['dir', '--redact', '--no-banner', '--regex-engine', 'stdlib', ...paths], { stdio: 'inherit' });
-  }
   if (result.error || result.status !== 0) throw new Error('BetterLeaks 未通过；停止发布');
 }
 await rm(output, { recursive: true, force: true });
-for (const mode of ['background', 'content', 'pages']) { await build({ configFile: 'vite.extension.config.ts', mode }); scan(); }
+for (const mode of ['background', 'presence', 'content', 'pages']) { await build({ configFile: 'vite.extension.config.ts', mode }); scan(); }
 await build({ configFile: 'vite.userscript.config.ts' }); scan();
 const { version } = JSON.parse(await readFile('package.json', 'utf8'));
 await mkdir('dist/extension', { recursive: true });
@@ -39,7 +32,10 @@ await writeFile('dist/extension/manifest.json', JSON.stringify({
   host_permissions: ['https://www.pixiv.net/*', 'https://*.pximg.net/*'],
   optional_host_permissions: cloudOrigins.map(origin => `${origin}/*`),
   background: { service_worker: 'background.js', type: 'module' },
-  content_scripts: [{ matches: ['https://www.pixiv.net/*'], js: ['content.js'], run_at: 'document_idle' }],
+  content_scripts: [
+    { matches: ['https://www.pixiv.net/*'], js: ['presence.js'], run_at: 'document_start' },
+    { matches: ['https://www.pixiv.net/*'], js: ['content.js'], run_at: 'document_idle' },
+  ],
   options_page: 'options.html', action: { default_title: 'Pixiv Toolbox', default_popup: 'options.html' },
   declarative_net_request: { rule_resources: [{ id: 'images', enabled: true, path: 'rules.json' }] },
 }, null, 2));

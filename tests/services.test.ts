@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createClient } from '../src/client';
-import { createMedia } from '../src/media';
+import { createPreviewMedia } from '../src/media';
 import { uploadFile } from '../src/sync';
 import { checkedSettings, createServices, saveFile, startRunner } from '../src/services';
 import { defaults } from '../src/rules';
 import type { Media, PixivClient, Runtime, Schedule, Store, Task, Work } from '../src/types';
 
 vi.mock('../src/client', () => ({ createClient: vi.fn() }));
-vi.mock('../src/media', () => ({ createMedia: vi.fn() }));
+vi.mock('../src/media', () => ({ createPreviewMedia: vi.fn() }));
 vi.mock('../src/sync', () => ({ uploadFile: vi.fn(), syncData: vi.fn() }));
 
 const stops: (() => void)[] = [];
@@ -63,9 +63,9 @@ async function fixture(tasks: Task[] = []) {
     account: vi.fn(async () => '1'), work: vi.fn(async ref => work(ref.id)), list: vi.fn(async () => ({ refs: [], next: false })), bookmark: vi.fn(), follow: vi.fn(),
   };
   const media: Media = { export: vi.fn(async function* (work) { yield { name: `${work.id}.jpg`, data: work.pages[0].original }; }), frames: vi.fn() };
-  vi.mocked(createClient).mockReturnValue(client); vi.mocked(createMedia).mockReturnValue(media);
+  vi.mocked(createClient).mockReturnValue(client); vi.mocked(createPreviewMedia).mockReturnValue({ frames: media.frames });
   const services = await createServices(runtime);
-  const start = () => { const stop = startRunner(services); stops.push(stop); return stop; };
+  const start = () => { const stop = startRunner(services, media); stops.push(stop); return stop; };
   return { data, store, runtime, client, media, services, start };
 }
 async function state(f: Awaited<ReturnType<typeof fixture>>, id: string, expected: Task['state']) {

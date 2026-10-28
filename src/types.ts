@@ -55,7 +55,7 @@ export interface Media {
   frames(work: Work, signal?: AbortSignal): Promise<{ images: ImageBitmap[]; delays: number[]; dispose(): void }>;
 }
 export interface Services {
-  runtime: Runtime; client: PixivClient; media: Media;
+  runtime: Runtime; client: PixivClient; media: Pick<Media, 'frames'>;
   settings: Settings;
   configure(settings: Settings): Promise<void>;
   enqueue(refs: Ref[], options?: { pages?: number[]; force?: boolean; asset?: 'avatar' | 'cover' }): Promise<void>;

@@ -1,10 +1,11 @@
 import { createServices, startRunner } from './services';
+import { createMedia } from './media';
 import { decode, extensionRuntime, localExtensionRuntime } from './runtime';
 
 const bridge = extensionRuntime();
 const runtime = localExtensionRuntime(bridge.save, bridge.notify);
 runtime.subscribe = bridge.subscribe;
-void createServices(runtime).then(startRunner);
+void createServices(runtime).then(services => startRunner(services, createMedia(runtime)));
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
   if (sender.id !== chrome.runtime.id || message?.app !== 'pixiv-toolbox' || message.op !== 'blob') return;
   const [body, type, filename, conflict, receipt] = message.args;
