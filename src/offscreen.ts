@@ -4,6 +4,8 @@ import { decode, extensionRuntime, localExtensionRuntime } from './runtime';
 
 const bridge = extensionRuntime();
 const runtime = localExtensionRuntime(bridge.save, bridge.notify);
+const read = runtime.store.get.bind(runtime.store);
+runtime.store.get = <T>(id: string) => id.startsWith('receipt:') ? bridge.store.get<T>(id) : read<T>(id);
 runtime.subscribe = bridge.subscribe;
 void createServices(runtime).then(services => startRunner(services, createMedia(runtime)));
 chrome.runtime.onMessage.addListener((message, sender, reply) => {

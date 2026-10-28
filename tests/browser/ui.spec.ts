@@ -11,14 +11,15 @@ declare global {
 }
 
 const script = fileURLToPath(new URL('../../dist/userscript/pixiv-toolbox.user.js', import.meta.url));
+const presence = fileURLToPath(new URL('../../dist/extension/presence.js', import.meta.url));
 const imageURL = (id: string, page = 0) => `https://i.pximg.net/toolbox-fixture/${id}_p${page}.png`;
 const fixtureHTML = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>Generated Pixiv fixture</title>
 <style>body{margin:0;background:#edf1f6;color:#25364a;font:16px system-ui}h1{margin:35px 70px;font-size:24px}main{margin:60px 70px;display:flex;flex-direction:column;gap:70px;width:200px}article{margin:0}a{display:block;width:200px;height:160px}img{display:block;width:200px;height:160px;object-fit:cover}p{margin:8px 0}</style></head>
 <body><h1>本地生成的 Pixiv 测试列表</h1><main><article><a id="card-a" href="/artworks/101"><img src="${imageURL('101')}" alt="生成作品 A"></a><p>多页作品 A</p></article><article><a id="card-b" href="/artworks/202"><img src="${imageURL('202')}" alt="生成作品 B"></a><p>作品 B</p></article></main></body></html>`;
 
-async function installBridge(page: Page) {
-  await page.addInitScript(() => {
-    const values: Record<string, unknown> = { suspended: true, settings: { preload: 0 } };
+async function installBridge(page: Page, suspended: boolean) {
+  await page.addInitScript(suspended => {
+    const values: Record<string, unknown> = { suspended, settings: { preload: 0 } };
     const requests: BridgeRequest[] = [];
     const listeners = new Map<number, { name: string; callback: (name: string, old: unknown, value: unknown, remote: boolean) => void }>();
     let nextListener = 1;
@@ -49,10 +50,10 @@ async function installBridge(page: Page) {
       queueMicrotask(() => options.onerror?.({ error: 'The GM bridge intentionally does not emulate saving files.' }));
       return { abort() {} };
     } });
-  });
+  }, suspended);
 }
 
-async function startFixture(page: Page, holdA = false) {
+async function startFixture(page: Page, holdA = false, extensionPresent = false) {
   await page.setViewportSize({ width: 1440, height: 1000 });
   const generated = await page.evaluate(async () => {
     const images: number[][] = [];
@@ -67,7 +68,8 @@ async function startFixture(page: Page, holdA = false) {
   const images = generated.map(image => Buffer.from(image));
   let releaseA!: () => void;
   const pendingA = new Promise<void>(resolve => { releaseA = resolve; });
-  await installBridge(page);
+  await installBridge(page, !extensionPresent);
+  if (extensionPresent) await page.addInitScript({ path: presence });
   await page.route('https://i.pximg.net/**', route => {
     const url = route.request().url();
     return route.fulfill({ contentType: 'image/png', body: images[url.includes('202') ? 2 : url.includes('_p1') ? 1 : 0], headers: { 'Access-Control-Allow-Origin': '*' } });
@@ -89,7 +91,7 @@ async function startFixture(page: Page, holdA = false) {
   });
   await page.goto('https://www.pixiv.net/tags/fixture/artworks');
   await page.addScriptTag({ path: script });
-  await expect(page.getByRole('button', { name: '作品工作台', exact: true })).toBeVisible();
+  if (!extensionPresent) await expect(page.getByRole('button', { name: '作品工作台', exact: true })).toBeVisible();
   return { releaseA };
 }
 
@@ -162,4 +164,14 @@ test('GM bridge, not Tampermonkey: shipped ShadowRoot viewer flips pages, rotate
   await expect(page.locator('.task')).toHaveCount(1);
   await expect(page.locator('.task .badge')).toHaveText('排队');
   await page.screenshot({ path: testInfo.outputPath('gm-bridge-task-queue.png') });
+});
+
+test('GM bridge, not Tampermonkey: document-start extension presence prevents a second UI and runner', async ({ page }) => {
+  await startFixture(page, false, true);
+  // Wait beyond the documented 80 ms startup arbitration window. The assertion
+  // concerns absence, so it must cover the time at which an incorrect mount occurs.
+  await page.waitForTimeout(200);
+  await expect(page.locator('#pixiv-toolbox')).toHaveCount(0);
+  expect(await page.evaluate(() => window.gmBridge.requests)).toEqual([]);
+  expect(await page.evaluate(() => window.gmBridge.values.suspended)).toBe(true);
 });

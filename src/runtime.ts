@@ -34,10 +34,15 @@ export function extensionRuntime(): Runtime {
     request: async (url, options = {}) => {
       options.signal?.throwIfAborted();
       const { signal, ...init } = options;
-      const wire = init.body instanceof Uint8Array ? { ...init, body: encode(init.body), encodedBody: true } : init;
-      const result = await call<HttpResult & { encoded?: boolean }>('request', [url, wire]);
-      signal?.throwIfAborted();
-      return { ...result, body: result.encoded ? decode(result.body as string) : result.body };
+      const requestId = crypto.randomUUID();
+      const cancel = () => { void call('abortRequest', [requestId]).catch(() => {}); };
+      signal?.addEventListener('abort', cancel, { once: true });
+      try {
+        const wire = init.body instanceof Uint8Array ? { ...init, body: encode(init.body), encodedBody: true, requestId } : { ...init, requestId };
+        const result = await call<HttpResult & { encoded?: boolean }>('request', [url, wire]);
+        signal?.throwIfAborted();
+        return { ...result, body: result.encoded ? decode(result.body as string) : result.body };
+      } finally { signal?.removeEventListener('abort', cancel); }
     },
     save: async (data, filename, conflict = 'uniquify', receipt, signal) => {
       signal?.throwIfAborted();
@@ -77,13 +82,16 @@ export function userscriptRuntime(): Runtime {
     save: async (data, filename, conflict = 'uniquify', receipt, signal) => {
       signal?.throwIfAborted();
       if (receipt) await store.set(`receipt:${receipt}`, { state: 'saving', at: Date.now() });
-      await new Promise<void>((resolve, reject) => {
+      try { await new Promise<void>((resolve, reject) => {
         const cancel = () => { handle.abort(); clean(); reject(new DOMException('已取消', 'AbortError')); };
         const clean = () => signal?.removeEventListener('abort', cancel);
         const handle = GM_download({ url: data as string, name: filename, saveAs: false, conflictAction: conflict,
           onload: () => { clean(); resolve(); }, onerror: error => { clean(); reject(new Error(`保存失败：${error.error}`)); }, ontimeout: () => { clean(); reject(new Error('保存超时')); } });
         signal?.addEventListener('abort', cancel, { once: true });
-      });
+      }); } catch (error) {
+        if (receipt) await store.set(`receipt:${receipt}`, { state: 'failed', at: Date.now() });
+        throw error;
+      }
       if (receipt) await store.set(`receipt:${receipt}`, { state: 'done', at: Date.now() });
     },
     notify: () => { void GM.setValue('changed', crypto.randomUUID()); },

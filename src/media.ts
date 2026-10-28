@@ -153,6 +153,7 @@ async function archive(entries: AsyncIterable<{ name: string; data: Uint8Array |
       if (names.has(entry.name)) throw new Error(`压缩包内文件名重复：${entry.name}`);
       names.add(entry.name);
       const file = new ZipPassThrough(entry.name);
+      file.mtime = new Date(1980, 0, 1);
       zip.add(file);
       file.push(entry.data instanceof Blob ? new Uint8Array(await entry.data.arrayBuffer()) : entry.data, true);
       if (failure) throw failure;
@@ -345,8 +346,8 @@ async function novelEpub(runtime: Runtime, work: Work, signal?: AbortSignal) {
   );
   for (const [i, chapter] of chapters.entries()) files.push({ name: `OEBPS/chapter-${i + 1}.xhtml`, data: strToU8(xhtml(chapter.title, `<h1>${xml(chapter.title)}</h1>${body(chapter.text)}`)) });
   const manifest = chapters.map((_, i) => `<item id="c${i + 1}" href="chapter-${i + 1}.xhtml" media-type="application/xhtml+xml"/>`).join('') + [...illustrations.entries()].map(([id, item], i) => `<item id="img${i}" href="${xml(item.path)}" media-type="${item.type}"${id === '__cover' ? ' properties="cover-image"' : ''}/>`).join('');
-  const modified = new Date(work.updated || Date.now());
-  const date = Number.isNaN(modified.getTime()) ? new Date() : modified;
+  const modified = new Date(work.updated || '1980-01-01T00:00:00Z');
+  const date = Number.isNaN(modified.getTime()) ? new Date('1980-01-01T00:00:00Z') : modified;
   files.push({ name: 'OEBPS/content.opf', data: strToU8(`<?xml version="1.0" encoding="UTF-8"?><package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="id"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="id">pixiv-novel-${xml(work.id)}</dc:identifier><dc:title>${xml(work.title)}</dc:title><dc:creator>${xml(work.userName)}</dc:creator><dc:language>und</dc:language><dc:source>${xml(sourceUrl(work))}</dc:source><meta property="dcterms:modified">${date.toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta></metadata><manifest><item id="title" href="title.xhtml" media-type="application/xhtml+xml"/><item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>${manifest}</manifest><spine><itemref idref="title"/>${chapters.map((_, i) => `<itemref idref="c${i + 1}"/>`).join('')}</spine></package>`) });
   return archive((async function* () { yield* files; })(), 'application/epub+zip', signal);
 }
