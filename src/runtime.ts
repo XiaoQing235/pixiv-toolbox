@@ -16,7 +16,7 @@ export async function allowed(url: string, store: Store): Promise<boolean> {
 }
 export async function fetchResult(store: Store, url: string, options: HttpOptions = {}): Promise<HttpResult> {
   if (!await allowed(url, store)) throw new Error('该请求地址未获得访问许可');
-  const response = await fetch(url, { method: options.method, headers: options.headers, body: options.body,
+  const response = await fetch(url, { method: options.method, headers: options.headers, body: options.body instanceof Uint8Array ? new Uint8Array(options.body).buffer : options.body,
     signal: options.signal, credentials: new URL(url).hostname === 'www.pixiv.net' ? 'include' : 'omit', redirect: 'error' });
   const size = Number(response.headers.get('content-length') || 0);
   if (size > 256 * 1024 * 1024) throw new Error('文件超过 256 MiB 内存处理上限');
@@ -34,13 +34,20 @@ export function extensionRuntime(): Runtime {
     request: async (url, options = {}) => {
       options.signal?.throwIfAborted();
       const { signal, ...init } = options;
-      const result = await call<HttpResult & { encoded?: boolean }>('request', [url, init]);
+      const wire = init.body instanceof Uint8Array ? { ...init, body: encode(init.body), encodedBody: true } : init;
+      const result = await call<HttpResult & { encoded?: boolean }>('request', [url, wire]);
       signal?.throwIfAborted();
       return { ...result, body: result.encoded ? decode(result.body as string) : result.body };
     },
-    save: async (data, filename, conflict = 'uniquify') => {
-      if (typeof data === 'string') return call('save', [data, filename, conflict]);
-      return call('saveBlob', [encode(new Uint8Array(await data.arrayBuffer())), data.type, filename, conflict]);
+    save: async (data, filename, conflict = 'uniquify', receipt, signal) => {
+      signal?.throwIfAborted();
+      const cancel = () => { if (receipt) void call('cancel', [receipt]).catch(() => {}); };
+      signal?.addEventListener('abort', cancel, { once: true });
+      try {
+        if (typeof data === 'string') await call('save', [data, filename, conflict, receipt]);
+        else await call('saveBlob', [encode(new Uint8Array(await data.arrayBuffer())), data.type, filename, conflict, receipt]);
+        signal?.throwIfAborted();
+      } finally { signal?.removeEventListener('abort', cancel); }
     },
     notify: () => { void call('notify').catch(() => {}); },
     subscribe: callback => {
@@ -60,17 +67,25 @@ export function userscriptRuntime(): Runtime {
       return new Promise((resolve, reject) => {
         const abort = () => { handle.abort(); reject(new DOMException('已取消', 'AbortError')); };
         const clean = () => options.signal?.removeEventListener('abort', abort);
-        const handle = GM.xmlHttpRequest({ url, method: (options.method || 'GET') as 'GET', headers: options.headers, data: options.body,
-          responseType: options.bytes ? 'arraybuffer' : 'text', timeout: 60000,
+        const handle = GM.xmlHttpRequest({ url, method: (options.method || 'GET') as 'GET', headers: options.headers, data: options.body instanceof Uint8Array ? new Blob([new Uint8Array(options.body)]) : options.body,
+          responseType: options.bytes ? 'arraybuffer' : undefined, timeout: 60000,
           onload: result => { clean(); resolve({ status: result.status, headers: Object.fromEntries(result.responseHeaders.trim().split(/\r?\n/).filter(line => line.includes(':')).map(line => { const i = line.indexOf(':'); return [line.slice(0, i).toLowerCase(), line.slice(i + 1).trim()]; })), body: options.bytes ? new Uint8Array(result.response) : result.responseText }); },
           onerror: () => { clean(); reject(new Error('网络请求失败')); }, ontimeout: () => { clean(); reject(new Error('网络请求超时')); }, onabort: clean });
         options.signal?.addEventListener('abort', abort, { once: true });
       });
     },
-    save: (data, filename, conflict = 'uniquify') => new Promise((resolve, reject) => {
-      GM.download({ url: data as string, name: filename, saveAs: false, conflictAction: conflict,
-        onload: () => resolve(), onerror: error => reject(new Error(`保存失败：${error.error}`)), ontimeout: () => reject(new Error('保存超时')) });
-    }),
+    save: async (data, filename, conflict = 'uniquify', receipt, signal) => {
+      signal?.throwIfAborted();
+      if (receipt) await store.set(`receipt:${receipt}`, { state: 'saving', at: Date.now() });
+      await new Promise<void>((resolve, reject) => {
+        const cancel = () => { handle.abort(); clean(); reject(new DOMException('已取消', 'AbortError')); };
+        const clean = () => signal?.removeEventListener('abort', cancel);
+        const handle = GM_download({ url: data as string, name: filename, saveAs: false, conflictAction: conflict,
+          onload: () => { clean(); resolve(); }, onerror: error => { clean(); reject(new Error(`保存失败：${error.error}`)); }, ontimeout: () => { clean(); reject(new Error('保存超时')); } });
+        signal?.addEventListener('abort', cancel, { once: true });
+      });
+      if (receipt) await store.set(`receipt:${receipt}`, { state: 'done', at: Date.now() });
+    },
     notify: () => { void GM.setValue('changed', crypto.randomUUID()); },
     subscribe: callback => {
       const listener = GM.addValueChangeListener('changed', callback);

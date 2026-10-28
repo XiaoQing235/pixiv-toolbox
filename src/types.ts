@@ -38,7 +38,7 @@ export interface Task {
   id: string; ref: Ref; account: string; title: string; state: TaskState; created: number;
   settings: Settings; pages?: number[]; force?: boolean; asset?: 'avatar' | 'cover';
   completed: string[]; error?: string; progress: number; total: number; attempt?: string;
-  uploaded?: string[];
+  uploaded?: string[]; savingFile?: string; uploadPending?: string[]; retries?: number;
 }
 export interface Schedule { id: string; source: string; everyMinutes: number; limit: number; next: number; enabled: boolean; account: string; settings: Settings }
 export interface CloudConfig { url: string; username: string; password: string; upload: boolean }

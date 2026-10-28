@@ -27,7 +27,7 @@ const search = ref('');
 const sort = ref(false);
 const windowStart = ref(0);
 const windowSize = 30;
-const listPage = ref(1);
+const listPage = ref(Math.max(1, Number(new URL(location.href).searchParams.get('p')) || 1));
 const hasNext = ref(true);
 const paging = ref(false);
 const autoPage = ref(false);
@@ -76,6 +76,7 @@ let siteObserver: IntersectionObserver | undefined;
 const siteObserved = new Map<HTMLAnchorElement, Card>();
 const siteVisible = new Set<HTMLAnchorElement>();
 const siteAttempted = new Set<string>();
+const sitePending = new Map<string, AbortSignal>();
 const siteStyled = new Set<HTMLElement>();
 let siteController = new AbortController();
 let siteInFlight = 0;
@@ -169,7 +170,8 @@ function pumpSiteQueue() {
     if (siteAttempted.has(key)) continue;
     siteAttempted.add(key); siteInFlight++; siteRequests++;
     const signal = siteController.signal;
-    void services.client.work(card.ref, signal).then(work => { if (!signal.aborted && alive) remember(work); }).catch(() => { /* Original cards remain visible if details cannot be read. */ }).finally(() => { siteInFlight--; pumpSiteQueue(); });
+    sitePending.set(key, signal);
+    void services.client.work(card.ref, signal).then(work => { if (!signal.aborted && alive) remember(work); }).catch(() => { /* Original cards remain visible if details cannot be read. */ }).finally(() => { if (sitePending.get(key) === signal) sitePending.delete(key); siteInFlight--; pumpSiteQueue(); });
     if (siteInFlight >= 2 || siteRequests >= 100) break;
   }
 }
@@ -413,7 +415,7 @@ async function restore(event: Event) { const input = event.target as HTMLInputEl
 function stateLabel(state: Task['state']) { return ({ queued: '排队', running: '处理中', saving: '保存中', done: '完成', failed: '失败', paused: '暂停', uncertain: '待确认保存' })[state]; }
 function date(at: number) { return new Date(at).toLocaleString(); }
 function visibilityChange() {
-  if (document.hidden) { clearPreload(); metadataController.abort(); siteController.abort(); cancelAnimationFrame(raf); raf = 0; }
+  if (document.hidden) { clearPreload(); metadataController.abort(); for (const key of sitePending.keys()) siteAttempted.delete(key); siteController.abort(); cancelAnimationFrame(raf); raf = 0; }
   else { siteController = new AbortController(); startAnimation(); void loadWindow(); pumpSiteQueue(); }
 }
 watch([windowStart, search, sort], () => { void loadWindow(); });
