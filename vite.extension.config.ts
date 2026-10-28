@@ -5,7 +5,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: 'chrome120', outDir: 'dist/extension', emptyOutDir: false, modulePreload: false,
     rolldownOptions: mode === 'pages'
-      ? { input: { options: 'options.html', offscreen: 'offscreen.html' } }
-      : { input: `src/${mode}.ts`, output: { format: ['content', 'presence'].includes(mode) ? 'iife' : 'es', entryFileNames: `${mode}.js`, codeSplitting: false } },
+      ? { input: { options: 'options.html', offscreen: 'offscreen.html' }, output: { charset: 'ascii' } }
+      : { input: `src/${mode}.ts`, output: { format: ['content', 'presence'].includes(mode) ? 'iife' : 'es', entryFileNames: `${mode}.js`, codeSplitting: false, charset: 'ascii' } },
   },
 }));

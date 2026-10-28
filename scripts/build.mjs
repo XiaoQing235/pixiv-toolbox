@@ -45,9 +45,21 @@ async function entries(directory, prefix = '') {
   const files = {};
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     if (entry.isDirectory()) Object.assign(files, await entries(join(directory, entry.name), prefix + entry.name + '/'));
-    else files[prefix + entry.name] = new Uint8Array(await readFile(join(directory, entry.name)));
+    else {
+      const bytes = new Uint8Array(await readFile(join(directory, entry.name)));
+      if (entry.name.endsWith('.js')) {
+        const source = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+        for (const char of source) {
+          const code = char.codePointAt(0);
+          if ((code & 0xffff) >= 0xfffe || code >= 0xfdd0 && code <= 0xfdef) throw new Error(`Chromium 不支持产物中的 Unicode 非字符：${entry.name}`);
+        }
+      }
+      files[prefix + entry.name] = bytes;
+    }
   }
   return files;
 }
 await writeFile(`dist/pixiv-toolbox-${version}-mv3.zip`, zipSync(await entries('dist/extension')));
+await entries('dist/userscript');
+if (/^\/\/ @require\s+https?:/m.test(await readFile('dist/userscript/pixiv-toolbox.user.js', 'utf8'))) throw new Error('用户脚本不能依赖远程执行代码');
 console.log('两种产物已生成，工作树 BetterLeaks 扫描通过。');

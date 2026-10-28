@@ -129,7 +129,7 @@ export async function createServices(runtime: Runtime): Promise<Services> {
       await store.set(`schedule:${schedule.id}`, schedule); runtime.notify();
     },
     removeSchedule: async id => { await store.remove(`schedule:${id}`); runtime.notify(); },
-    cloud: () => store.get<CloudConfig>('cloud'),
+    cloud: async () => { const config = await store.get<CloudConfig>('cloud'); return config ? { ...config, password: '' } : undefined; },
     setCloud: async config => {
       const url = new URL(config.url);
       if (url.protocol !== 'https:' || url.username || url.password) throw new Error('请使用不含登录信息的 HTTPS 地址');
@@ -137,7 +137,10 @@ export async function createServices(runtime: Runtime): Promise<Services> {
         if (location.protocol !== 'chrome-extension:') { await chrome.runtime.sendMessage({ app: 'pixiv-toolbox', op: 'options', args: [] }); throw new Error('请在扩展设置页配置云端访问权限'); }
         if (!await chrome.permissions.request({ origins: [`${url.origin}/*`] })) throw new Error('未获得云端访问权限');
       }
-      await store.set('cloud', { ...config, url: url.href.replace(/\/?$/, '/') });
+      const previous = await store.get<CloudConfig>('cloud');
+      const address = url.href.replace(/\/?$/, '/');
+      const password = config.password || (previous?.url === address && previous.username === config.username ? previous.password : '');
+      await store.set('cloud', { ...config, password, url: address });
     },
     sync: async choice => { await syncData(runtime, choice); service.settings = checkedSettings(await store.get('settings') || defaults); runtime.notify(); },
   };
@@ -283,7 +286,7 @@ export function startRunner(services: Services, media: Media): () => void {
               await check();
               const identity = JSON.stringify([task.account, refKey(work), work.updated, file.name, task.settings.animationFormat, task.settings.novelFormat, task.settings.metadata, task.settings.directory]);
               const saved = await store.get(`saved:${identity}`);
-              const cloud = await services.cloud();
+              const cloud = await runtime.store.get<CloudConfig>('cloud');
               const completed = task.completed.includes(file.name);
               if (!completed && saved && !task.force) task.completed.push(file.name);
               if (!completed && cloud?.upload && !(task.uploaded || []).includes(file.name)) task.uploadPending = [...new Set([...(task.uploadPending || []), file.name])];
